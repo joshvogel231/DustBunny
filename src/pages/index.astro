@@ -1,0 +1,547 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Mascot from "../components/Mascot.astro";
+import Footer from "../components/Footer.astro";
+
+const services = [
+  {
+    tag: "01",
+    title: "Digital Footprint",
+    fill: "halftone-red",
+    text: "Get found everywhere it counts — a fast, modern site plus Google Business, maps, and listings wired up so customers can actually find you.",
+  },
+  {
+    tag: "02",
+    title: "SEO That Sticks",
+    fill: "halftone-teal",
+    text: "Real keyword research, clean technical SEO, and content that ranks. We chase the searches your customers actually type.",
+  },
+  {
+    tag: "03",
+    title: "AI SEO",
+    fill: "halftone-mustard",
+    text: "When people ask ChatGPT, Gemini, or Google's AI for a recommendation — we make sure your business is the answer.",
+  },
+  {
+    tag: "04",
+    title: "Traffic That Converts",
+    fill: "halftone-ink",
+    text: "Pretty doesn't pay the bills. We build pages tuned to turn visitors into calls, bookings, and paying customers.",
+  },
+];
+
+const steps = [
+  { n: "1", title: "Sweep", text: "We dig into your current setup — bad site, no site, or somewhere in between — and find what's costing you traffic." },
+  { n: "2", title: "Build", text: "We design and build your site + footprint with SEO baked in from line one." },
+  { n: "3", title: "Launch", text: "We ship fast, hook up analytics, and make sure everything's tracked." },
+  { n: "4", title: "Grow", text: "We watch the numbers and keep optimizing so your rankings climb, not slide." },
+];
+
+
+// Stats sourced from industry research (2024–2025):
+//  - 31%: shoppers who avoid a small business with no website (Top Design Firms / Visual Objects)
+//  - 76%: "near me" searches that visit a related business within 24 hours (Google / Think with Google)
+//  - 2x:  growth rate of small businesses with a website vs. those without (Verisign / various)
+const stats = [
+  { num: 31, suffix: "%", small: "of shoppers skip a small business with no site" },
+  { num: 76, suffix: "%", small: "of “near me” searches visit within a day" },
+  { num: 2,  suffix: "×", small: "faster growth for small businesses with a real site" },
+];
+---
+
+<Layout>
+  <span id="top"></span>
+  <Nav />
+
+  <main id="main">
+  <!-- ===================== HERO ===================== -->
+  <section class="action-lines relative overflow-hidden border-b-4 border-ink">
+    <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 md:grid-cols-2 md:py-24 lg:gap-16 lg:px-10">
+      <div>
+        <div class="ink mb-6 inline-block -rotate-2 bg-mustard px-4 py-2 font-body text-base font-800 uppercase tracking-wide shadow-comic sm:text-lg">
+          <span
+            class="typewriter"
+            data-typewriter="Bad site? No site? Same problem."
+            aria-label="Bad site? No site? Same problem."
+          >Bad site? No site? Same problem.</span>
+        </div>
+        <h1 class="font-impact text-5xl uppercase leading-[1.05] sm:text-6xl md:text-7xl">
+          Don't get<br />
+          left in the<br />
+          <span class="ink-2 mt-3 inline-block -rotate-1 bg-comic-red px-3 pb-2 pt-1 leading-none text-cream shadow-comic-sm">dust.</span>
+        </h1>
+        <p class="mt-6 max-w-md font-body text-lg leading-relaxed text-ink/80">
+          We take small businesses with a site they hate — or no site at all —
+          and build them a real <strong>digital footprint</strong>. Custom-built
+          sites with SEO + AI SEO baked in, engineered to drive traffic that
+          actually turns into customers.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a
+            href="#contact"
+            class="sticker ink bg-comic-red px-7 py-3 font-display text-base uppercase text-cream shadow-comic"
+          >
+            Clean My Site's Dust Bunnies
+          </a>
+          <a
+            href="#work"
+            class="sticker ink bg-cream px-7 py-3 font-display text-base uppercase shadow-comic"
+          >
+            See the Work
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-parallax relative flex justify-center md:justify-end">
+        <div class="parallax-layer parallax-glow absolute inset-0 -z-10 m-auto h-64 w-64 rounded-full halftone-teal opacity-70 blur-[1px] md:right-8 md:left-auto lg:h-80 lg:w-80"></div>
+        <div class="parallax-layer parallax-mascot">
+          <Mascot class="w-72 drop-shadow-[8px_8px_0_rgba(26,23,20,0.25)] md:w-[26rem] lg:w-[30rem]" />
+        </div>
+        <div class="parallax-layer parallax-speech speech ink absolute -right-2 top-2 max-w-[160px] rotate-3 bg-cream px-4 py-2 font-display text-sm shadow-comic-sm md:right-4">
+          Let's get you ahead of the curve!
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STATS BAR ===================== -->
+  <section class="halftone-ink border-b-4 border-ink">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 divide-y-4 divide-cream/20 px-5 py-8 text-cream sm:grid-cols-3 sm:divide-x-4 sm:divide-y-0">
+      {stats.map((s) => (
+        <div class="px-4 py-4 text-center sm:py-0">
+          <div
+            class="stat-number font-impact text-5xl text-mustard"
+            data-target={s.num}
+            data-suffix={s.suffix}
+          >{s.num}{s.suffix}</div>
+          <div class="mt-1 font-body text-sm uppercase tracking-wide text-cream/80">{s.small}</div>
+        </div>
+      ))}
+    </div>
+
+    <script is:inline>
+      (function () {
+        const els = document.querySelectorAll(".stat-number");
+        if (!els.length) return;
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // reset to 0 so the count-up has somewhere to start
+        if (!reduce) {
+          els.forEach((el) => {
+            el.textContent = "0" + (el.dataset.suffix || "");
+          });
+        }
+
+        if (reduce || !("IntersectionObserver" in window)) return;
+
+        const animate = (el) => {
+          const target = Number(el.dataset.target || 0);
+          const suffix = el.dataset.suffix || "";
+          const duration = 1500;
+          const startAt = performance.now();
+          function tick(now) {
+            const t = Math.min((now - startAt) / duration, 1);
+            // easeOutQuart — fast start, settles smoothly
+            const eased = 1 - Math.pow(1 - t, 4);
+            el.textContent = Math.round(target * eased) + suffix;
+            if (t < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        };
+
+        // rootMargin shrinks the observer's viewport to a horizontal band
+        // around the middle of the screen — the stats fire when they
+        // actually reach mid-viewport rather than the moment they peek in.
+        const io = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                animate(e.target);
+                observer.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "-40% 0px -40% 0px", threshold: 0 },
+        );
+
+        els.forEach((el) => io.observe(el));
+      })();
+    </script>
+  </section>
+
+  <!-- ===================== SERVICES ===================== -->
+  <section id="services" class="mx-auto max-w-6xl px-5 py-20">
+    <div class="mb-12 text-center">
+      <div class="ink-2 inline-block rotate-1 bg-teal px-3 py-1 font-body text-sm font-800 uppercase tracking-wide text-cream shadow-comic-sm">
+        What we do
+      </div>
+      <h2 class="mt-4 font-impact text-3xl uppercase sm:text-4xl md:text-5xl" data-reveal-letters>Build the footprint. Drive the traffic.</h2>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2" data-stagger>
+      {services.map((s) => (
+        <div class="sticker panel relative p-7">
+          <div class={`${s.fill} ink-2 absolute -top-4 -left-4 flex h-12 w-12 items-center justify-center font-impact text-xl text-cream`}>
+            {s.tag}
+          </div>
+          <h3 class="mb-2 mt-2 font-impact text-2xl uppercase">{s.title}</h3>
+          <p class="font-body leading-relaxed text-ink/80">{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ===================== WORK ===================== -->
+  <section id="work" class="border-y-4 border-ink halftone-mustard">
+    <div class="mx-auto max-w-6xl px-5 py-20">
+      <div class="mb-12 text-center">
+        <h2 class="font-impact text-4xl uppercase sm:text-5xl">Recent Work</h2>
+        <p class="mt-3 font-body text-ink/80">Real sites. Real businesses. Real work.</p>
+      </div>
+      <div class="grid gap-8 sm:grid-cols-2" data-stagger>
+        {[
+          {
+            name: "Southern Creations",
+            cat: "Landscape & Design",
+            blurb: "Florida landscape and hardscape brand. Full custom build with local SEO that ranks across Hillsborough and Pasco counties.",
+            url: "https://glowing-truffle-611cc9.netlify.app/",
+            fill: "halftone-teal",
+            textColor: "text-cream",
+            shot: "/work/southern-creations.jpg",
+          },
+          {
+            name: "Pipeline Construction & Maintenance",
+            cat: "Energy & Construction",
+            blurb: "350-person pipeline contractor working 28 states. A corporate rebuild that finally looks like the operator they are.",
+            url: "https://frolicking-sundae-3dbbf1.netlify.app/",
+            fill: "halftone-ink",
+            textColor: "text-cream",
+            shot: "/work/pcm.jpg",
+          },
+          {
+            name: "Vertex Contractors",
+            cat: "Site Work & Demo",
+            blurb: "Site prep, land clearing, and demolition out of Lafayette. New brand identity and a site built to land jobs from day one.",
+            url: "https://helpful-seahorse-3cfd8f.netlify.app/",
+            fill: "halftone-red",
+            textColor: "text-cream",
+            shot: "/work/vertex.jpg",
+          },
+          {
+            name: "Florida Fishing Guide",
+            cat: "Charters & Guide Services",
+            blurb: "Tampa Bay fishing guide running inshore, nearshore, and flats charters. Bold build that books trips straight from the homepage.",
+            url: "https://delicate-malasada-ae585e.netlify.app/",
+            fill: "halftone-dust",
+            textColor: "text-ink",
+            shot: "/work/florida-fishing.jpg",
+          },
+        ].map((w) => (
+          <a
+            href={w.url}
+            target="_blank"
+            rel="noopener"
+            class="work-card sticker ink block bg-cream shadow-comic"
+          >
+            <div class="work-trigger relative h-40 overflow-hidden border-b-4 border-ink">
+              <div class="work-trigger-inner">
+                <div class={`work-trigger-face work-trigger-front ${w.fill} flex items-center justify-center px-4 text-center`}>
+                  <span class={`font-display ${w.textColor} text-sm uppercase tracking-widest`}>{w.cat}</span>
+                </div>
+                <div class="work-trigger-face work-trigger-back">
+                  <img src={w.shot} alt={`${w.name} preview`} width="600" height="240" loading="lazy" />
+                </div>
+              </div>
+            </div>
+            <div class="p-5">
+              <h3 class="font-impact text-xl uppercase leading-tight">{w.name}</h3>
+              <p class="mt-2 font-body text-sm text-ink/80">{w.blurb}</p>
+              <span class="mt-3 inline-block font-body text-xs font-700 uppercase tracking-wide text-comic-red">Visit site →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Mobile-only: sequential auto-flip + image scroll for each work card.
+         Triggers once when the section scrolls into view.
+         On hover-capable devices the normal CSS hover flip takes over instead. -->
+    <script is:inline>
+      (function () {
+        // Skip on hover-capable devices — CSS hover handles it there
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        const section = document.getElementById('work');
+        if (!section) return;
+        const cards = Array.from(section.querySelectorAll('.work-card'));
+        if (!cards.length) return;
+
+        let started = false;
+
+        function wait(ms) {
+          return new Promise(function (resolve) { setTimeout(resolve, ms); });
+        }
+
+        async function animateCard(card) {
+          const inner = card.querySelector('.work-trigger-inner');
+          const back  = card.querySelector('.work-trigger-back');
+          const img   = back ? back.querySelector('img') : null;
+          if (!inner) return;
+
+          // — Flip to screenshot face (1 s) —
+          inner.style.transition = 'transform 1s cubic-bezier(0.4, 0.0, 0.2, 1)';
+          inner.style.transform  = 'rotateY(180deg)';
+          await wait(1150);
+
+          // — Slow pan through the screenshot (3.5 s) —
+          if (img) {
+            img.style.transition = 'transform 3.5s ease-in-out';
+            img.style.transform  = 'translateY(calc(-100% + 160px))';
+            await wait(3700);
+          } else {
+            await wait(1400);
+          }
+
+          // — Flip back to label face (0.8 s) —
+          inner.style.transition = 'transform 0.8s ease-in-out';
+          inner.style.transform  = 'rotateY(0deg)';
+
+          // Reset image while it's hidden behind the front face
+          if (img) {
+            await wait(420);
+            img.style.transition = 'none';
+            img.style.transform  = 'translateY(0)';
+          }
+          await wait(450);
+        }
+
+        async function runSequence() {
+          if (started) return;
+          started = true;
+          for (var i = 0; i < cards.length; i++) {
+            await animateCard(cards[i]);
+            await wait(280); // brief pause between cards
+          }
+        }
+
+        const observer = new IntersectionObserver(
+          function (entries) {
+            if (entries.some(function (e) { return e.isIntersecting; })) {
+              runSequence();
+              observer.disconnect();
+            }
+          },
+          { threshold: 0.2 }
+        );
+        observer.observe(section);
+      })();
+    </script>
+  </section>
+
+  <!-- ===================== PROCESS ===================== -->
+  <section id="process" class="mx-auto max-w-6xl px-5 py-20">
+    <div class="mb-12 text-center">
+      <div class="ink-2 inline-block -rotate-1 bg-comic-red px-3 py-1 font-body text-sm font-800 uppercase tracking-wide text-cream shadow-comic-sm">
+        How it works
+      </div>
+      <h2 class="mt-4 font-impact text-4xl uppercase sm:text-5xl">From dusty to dominant</h2>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+      {steps.map((st) => (
+        <div class="sticker panel p-6 text-center">
+          <div class="burst mx-auto mb-4 flex h-20 w-20 items-center justify-center">
+            <span class="font-impact text-3xl">{st.n}</span>
+          </div>
+          <h3 class="font-impact text-xl uppercase">{st.title}</h3>
+          <p class="mt-2 font-body text-sm text-ink/80">{st.text}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- expandable detailed breakdown -->
+    <details class="process-details ink mx-auto mt-10 max-w-3xl bg-cream shadow-comic">
+      <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-4 font-display text-base uppercase">
+        <span>How it actually goes down</span>
+        <span class="process-chevron font-impact text-2xl leading-none" aria-hidden="true">▾</span>
+      </summary>
+      <div class="process-details-body border-t-4 border-ink px-6 py-6 sm:px-8 sm:py-8">
+        <ol class="space-y-5 font-body text-ink/85">
+          <li class="flex gap-4">
+            <span class="process-step-num">1</span>
+            <p><strong class="font-display text-base">Book your project.</strong><br />
+            Pick a slot and lock it in — that kicks the whole thing off.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="process-step-num">2</span>
+            <p><strong class="font-display text-base">Questionnaire + mood board.</strong><br />
+            We send over a questionnaire. You fill it out and put together a quick mood board so we know exactly where you want to land — vibe, colors, references, the whole deal.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="process-step-num">3</span>
+            <p><strong class="font-display text-base">Kickoff call.</strong><br />
+            We hop on a call to walk through anything the questionnaire didn't cover and align on direction before anyone touches a keyboard.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="process-step-num">4</span>
+            <p><strong class="font-display text-base">Build it — 3 to 5 days.</strong><br />
+            From the kickoff call, expect <strong>3–5 days</strong> to design, build, and hand over the first cut. Communication stays back-and-forth the whole time so we catch any course-corrections early — you'll never get to the end and find out we were off the rails on day one.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="process-step-num">5</span>
+            <p><strong class="font-display text-base">One free revision.</strong><br />
+            Every project includes one round of revisions, no extra charge.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="process-step-num">6</span>
+            <p><strong class="font-display text-base">More revisions if you need 'em.</strong><br />
+            Additional rounds are billed at an additional fee — you only pay if you actually want them.</p>
+          </li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <!-- ===================== MEET THE BUNNY (founder bio teaser) ===================== -->
+  <section id="about" class="border-y-4 border-ink halftone-red">
+    <div class="mx-auto max-w-5xl px-5 py-20">
+      <div class="mb-10 text-center">
+        <div class="ink-2 inline-block -rotate-1 bg-mustard px-3 py-1 font-body text-sm font-800 uppercase tracking-wide shadow-comic-sm">
+          Behind the broom
+        </div>
+        <h2 class="mt-4 font-impact text-4xl uppercase text-cream sm:text-5xl">
+          Meet our Head Dust Bunny
+        </h2>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-[1fr_1.3fr] md:items-center md:gap-12">
+        <!-- photo panel -->
+        <div class="panel relative aspect-[4/5] overflow-hidden p-0">
+          <img
+            src="/josh/josh-exec.jpg"
+            alt="Josh Vogel"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- bio panel -->
+        <div class="panel relative p-7 md:p-9">
+          <h3 class="font-impact text-3xl uppercase leading-none">Josh Vogel</h3>
+          <div class="mt-2 font-display text-sm uppercase tracking-wide text-comic-red">
+            Founder · Builder · Bunny-in-Chief
+          </div>
+
+          <p class="mt-5 font-body text-base leading-relaxed text-ink/85">
+            After earning his master's in AI design at Yale and three years at a
+            top Bay Area design studio, Josh moved back south to bring big-tech-quality
+            web work to the small businesses that need it most.
+          </p>
+
+          <a
+            href="/about"
+            class="sticker ink crt-warp mt-6 inline-block bg-comic-red px-5 py-2 font-display text-sm uppercase text-cream shadow-comic-sm"
+            data-bam="BAM!"
+          >
+            Read More →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact" class="mx-auto max-w-3xl px-5 py-20">
+    <div data-dust-peek class="relative">
+    <!-- bunny peeking up from behind the panel -->
+    <div class="dust-ears pointer-events-none absolute left-6 top-0 z-0 w-20 sm:left-10 sm:w-24">
+      <Mascot />
+    </div>
+    <div class="panel relative z-10 p-8 md:p-12">
+      <div class="burst absolute -right-5 -top-6 flex h-24 w-24 rotate-12 items-center justify-center text-center">
+        <span class="font-impact text-sm uppercase leading-none">Free<br />Sweep!</span>
+      </div>
+      <h2 class="font-impact text-3xl uppercase sm:text-4xl">Let's get you found.</h2>
+      <p class="mt-3 font-body text-ink/80">
+        Tell us about your business and we'll send back a no-pressure plan to grow your traffic.
+      </p>
+
+      <form
+        name="quote"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        action="/thanks"
+        class="mt-8 grid gap-5"
+      >
+        {/* Honeypot: bots fill every field they see; humans don't see this one.
+            Any submission with bot-field set is silently dropped by Netlify. */}
+        <p class="hidden" aria-hidden="true">
+          <label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+        <input type="hidden" name="form-name" value="quote" />
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block">
+            <span class="font-body text-sm font-700 uppercase tracking-wide">Name</span>
+            <input
+              required
+              name="name"
+              type="text"
+              class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm"
+            />
+          </label>
+          <label class="block">
+            <span class="font-body text-sm font-700 uppercase tracking-wide">Business Name</span>
+            <input
+              required
+              name="business"
+              type="text"
+              class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm"
+            />
+          </label>
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block">
+            <span class="font-body text-sm font-700 uppercase tracking-wide">Email</span>
+            <input
+              required
+              name="email"
+              type="email"
+              class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm"
+            />
+          </label>
+          <label class="block">
+            <span class="font-body text-sm font-700 uppercase tracking-wide">Current Site</span>
+            <input
+              name="current_site"
+              type="text"
+              placeholder="yourbusiness.com — or leave blank, that's our specialty"
+              class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm"
+            />
+          </label>
+        </div>
+        <label class="block">
+          <span class="font-body text-sm font-700 uppercase tracking-wide">What are you wanting?</span>
+          <textarea
+            required
+            name="message"
+            rows="4"
+            class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm"
+          ></textarea>
+        </label>
+        <button
+          type="submit"
+          class="sticker ink bg-comic-red px-7 py-3 font-display text-base uppercase text-cream shadow-comic"
+        >
+          Sweep It →
+        </button>
+      </form>
+    </div>
+    </div>
+  </section>
+
+  </main>
+
+  <Footer />
+</Layout>

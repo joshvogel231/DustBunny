@@ -1,0 +1,667 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Mascot from "../components/Mascot.astro";
+import Footer from "../components/Footer.astro";
+
+const stats = [
+  {
+    num: "75%",
+    headline: "of people judge your credibility by your website design alone.",
+    body: "Not your reviews. Not your years in business. Your website. They decide in seconds.",
+    source: "Stanford Web Credibility Research",
+    fill: "halftone-red",
+    numColor: "text-mustard",
+    textColor: "text-cream",
+    sourceColor: "text-cream/35",
+  },
+  {
+    num: "88%",
+    headline: "of visitors who have a bad experience will never come back.",
+    body: "Not might not. Won't. One slow page. One broken layout. Gone. For good.",
+    source: "UX Research",
+    fill: "halftone-ink",
+    numColor: "text-mustard",
+    textColor: "text-cream",
+    sourceColor: "text-cream/35",
+  },
+  {
+    num: "27%",
+    headline: "of small businesses in America have no website at all.",
+    body: "1 in 4 of your competitors already surrendered. The ones who showed up are winning.",
+    source: "Survey Data 2025",
+    fill: "halftone-teal",
+    numColor: "text-mustard",
+    textColor: "text-cream",
+    sourceColor: "text-cream/35",
+  },
+  {
+    num: "76%",
+    headline: "of 'near me' searches visit a business within 24 hours.",
+    body: "They are not browsing. They are buying. If you don't show up, that sale goes somewhere else.",
+    source: "Google / BrightLocal",
+    fill: "halftone-mustard",
+    numColor: "text-ink",
+    textColor: "text-ink",
+    sourceColor: "text-ink/40",
+  },
+  {
+    num: "40%",
+    headline: "faster revenue growth for small businesses with a real website.",
+    body: "Not a little faster. Forty percent. The kind of gap that compounds every single year.",
+    source: "Small Business Revenue Studies",
+    fill: "halftone-red",
+    numColor: "text-mustard",
+    textColor: "text-cream",
+    sourceColor: "text-cream/35",
+  },
+];
+
+const results = [
+  ["You Build a Real Digital Footprint", "Your website, Google listing, maps pin, and search presence all pulling the same direction. You show up everywhere your customers are looking. That is what gets the phone ringing."],
+  ["They Trust You Before You Say a Word", "A professional site does the credibility work before the conversation starts. Your first call isn't about proving you're legit. It's about closing."],
+  ["Your Phone Rings Differently", "Leads who find you through a strong site come in pre-sold. They've read about you. They've seen your work. They're not price-shopping. They're ready to book."],
+  ["You Work Less to Win More", "A good website runs 24 hours a day, 7 days a week. It captures leads while you're on a job, sleeping, or doing literally anything else. It's the one employee who never calls in sick."],
+  ["You Stop Competing on Price", "Businesses with polished sites command higher rates. When your brand looks premium, you attract clients who pay like it."],
+  ["Your Competitors Start Losing", "Every person who finds you first is one less person finding them. A real site is a compounding advantage. Every day it runs, it pulls further ahead."],
+];
+
+const clients = [
+  {
+    name: "Southern Creations",
+    cat: "Landscape & Design",
+    result: "Full custom build with local SEO targeting Hillsborough and Pasco counties. Showing up for the exact searches their customers type — without paying for ads.",
+    fill: "halftone-teal",
+    textColor: "text-cream",
+  },
+  {
+    name: "Pipeline Construction & Maintenance",
+    cat: "Energy & Construction",
+    result: "Complete corporate rebuild for a 350-person operation across 28 states. A site that finally looks like the company they actually are.",
+    fill: "halftone-ink",
+    textColor: "text-cream",
+  },
+  {
+    name: "Vertex Contractors",
+    cat: "Site Work & Demo",
+    result: "No website, no brand, no footprint — built from scratch. Now they look like they've been in business for years.",
+    fill: "halftone-red",
+    textColor: "text-cream",
+  },
+  {
+    name: "Florida Fishing Guide",
+    cat: "Tampa Bay Charters",
+    result: "Booking-first build designed to move a visitor from homepage to booked trip as fast as possible. Captain Bo books directly from the site.",
+    fill: "halftone-dust",
+    textColor: "text-ink",
+  },
+];
+
+const objections = [
+  {
+    q: "It's too expensive.",
+    a: "You know what's expensive? Losing 40% of your revenue growth because you don't have a real site. A website from The Dust Bunny is not a cost. It is the highest-ROI thing most small businesses can spend money on. And you won't need a second mortgage to get one.",
+    fill: "halftone-red",
+  },
+  {
+    q: "I'll just use Wix.",
+    a: "Go ahead. Let me know how that works out. Template platforms look like template platforms. Customers can tell. They are SEO disasters dressed up with drag-and-drop convenience. Built to be easy, not to win. Custom sites load faster, rank higher, and convert better. Full stop.",
+    fill: "halftone-ink",
+  },
+  {
+    q: "I need to think about it.",
+    a: "Here's what to think about: every day you wait is another 76 people in your area searching for what you do, finding someone else, and visiting their business within 24 hours. That is Google's own data. Thinking about it has a price. It is measured in customers who did not call you.",
+    fill: "halftone-teal",
+  },
+  {
+    q: "My current site is fine.",
+    a: "Fine doesn't fill your pipeline. When did you last look at your site the way a new customer does? On a phone. Cold. No context. No loyalty. If it looks fine to you, it might be because you already know what it's supposed to say. They don't.",
+    fill: "halftone-mustard",
+  },
+];
+
+const deliverables = [
+  ["Custom Design, No Templates", "Your business, your brand. Nobody else's layout. Nobody else's anything."],
+  ["SEO Built In From Day One", "Not added after. Not optional. Baked into the structure, the copy, and the code so you actually show up."],
+  ["AI SEO", "When someone asks ChatGPT or Google's AI for a recommendation, we make sure your business is the answer."],
+  ["Mobile-First Build", "Over half your visitors are on their phone. Fast, sharp, and converting on mobile before everything else."],
+  ["3 to 5 Business Day Turnaround", "Not weeks. Not a 6-week discovery phase. Fast, without cutting corners."],
+  ["One Free Revision Round", "After delivery you get one full round of revisions. If it is not right, we fix it."],
+  ["Clean, Fast Code", "No page builder bloat. No plugin soup. Code that loads fast and won't break every time something updates."],
+  ["Direct Access to Josh", "You are talking to the person building your site. Start to finish. No middlemen."],
+];
+---
+
+<Layout
+  title="Why Hire Me — The Dust Bunny | Custom Websites for Small Businesses"
+  description="The case for hiring Josh Vogel to build your site. Stats, proof, story, and a direct sales pitch. No fluff. The Dust Bunny builds sites that captivate and convert."
+>
+  <span id="top"></span>
+  <Nav />
+  <main id="main">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="action-lines relative overflow-hidden border-b-4 border-ink">
+    <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 md:grid-cols-2 md:py-24 lg:gap-16 lg:px-10">
+      <div>
+        <div class="ink mb-6 inline-block -rotate-2 bg-mustard px-4 py-2 font-body text-base font-800 uppercase tracking-wide shadow-comic">
+          Why Hire Me
+        </div>
+        <h1 class="font-impact text-5xl uppercase leading-none sm:text-6xl md:text-7xl">
+          Your Competitors<br />
+          Have a Better<br />
+          <span class="ink-2 mt-2 inline-block -rotate-1 bg-comic-red px-3 pb-2 pt-1 leading-none text-cream shadow-comic-sm">Website.</span>
+        </h1>
+        <p class="mt-6 max-w-md font-body text-xl leading-relaxed text-ink/80">
+          We can fix it. But only if you stop pretending it's fine.
+        </p>
+        <div class="mt-8">
+          <a
+            href="#contact"
+            class="sticker ink dollar-cta inline-block bg-comic-red px-7 py-3 font-display text-base uppercase text-cream shadow-comic"
+          >
+            Get a Site That Actually Works
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-parallax relative flex justify-center md:justify-end">
+        <div class="parallax-layer parallax-glow absolute inset-0 -z-10 m-auto h-64 w-64 rounded-full halftone-teal opacity-60 blur-[1px] md:right-8 md:left-auto lg:h-80 lg:w-80"></div>
+        <div class="parallax-layer parallax-mascot">
+          <Mascot class="w-72 drop-shadow-[8px_8px_0_rgba(26,23,20,0.25)] md:w-[26rem] lg:w-[30rem]" />
+        </div>
+        <div class="parallax-layer parallax-speech speech ink absolute -right-2 top-2 max-w-[140px] rotate-3 bg-cream px-4 py-2 font-display text-sm shadow-comic-sm md:right-4">
+          Still on Wix?
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STATS / PAIN ===================== -->
+  <section class="halftone-ink border-b-4 border-ink">
+    <div class="mx-auto max-w-6xl px-5 py-16">
+      <div class="mb-12 text-center" data-reveal>
+        <div class="ink-2 inline-block -rotate-1 bg-comic-red px-3 py-1 font-body text-sm font-800 uppercase tracking-wide text-cream shadow-comic-sm">
+          The Numbers
+        </div>
+        <h2 class="mt-4 font-impact text-4xl uppercase text-cream sm:text-5xl">
+          You Are Bleeding Customers<br class="hidden sm:block" /> Right Now.
+        </h2>
+        <p class="mt-3 font-body text-cream/60">Don't believe me? Look at the numbers.</p>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {stats.map((s) => (
+          <div class={`${s.fill} sticker relative overflow-hidden border-4 border-ink p-6 shadow-comic`}>
+            <div class={`font-impact text-7xl leading-none sm:text-8xl ${s.numColor}`}>{s.num}</div>
+            <p class={`mt-3 font-body text-sm font-700 leading-snug ${s.textColor}`}>{s.headline}</p>
+            <p class={`mt-2 font-body text-xs leading-relaxed ${s.textColor} opacity-80`}>{s.body}</p>
+            <p class={`mt-3 font-body text-xs uppercase tracking-wide ${s.sourceColor}`}>{s.source}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-14 text-center" data-reveal>
+        <p class="mx-auto max-w-2xl font-body text-lg leading-relaxed text-cream/80">
+          This is not abstract. This is someone who needed a landscaper in your zip code, searched Google at 7pm, found your competitor's clean fast site, and called them instead of you.
+        </p>
+        <p class="mt-5 font-impact text-2xl uppercase text-mustard">
+          That happened today. It will happen again tomorrow.
+        </p>
+        <div class="mt-8">
+          <a
+            href="#contact"
+            class="sticker ink dollar-cta inline-block bg-comic-red px-7 py-3 font-display text-base uppercase text-cream shadow-comic"
+          >
+            I'm Done Leaving Money on the Table
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== THE TURN ===================== -->
+  <section class="border-b-4 border-ink bg-cream">
+    <div class="mx-auto max-w-6xl px-5 py-16">
+      <div class="mb-12 text-center" data-reveal>
+        <div class="ink-2 inline-block rotate-1 bg-teal px-3 py-1 font-body text-sm font-800 uppercase tracking-wide text-cream shadow-comic-sm">
+          The Fix
+        </div>
+        <h2 class="mt-4 font-impact text-3xl uppercase sm:text-4xl md:text-5xl">Fix the Site. Fix the Business.</h2>
+        <p class="mt-3 font-body text-ink/70">Here's what happens when your website actually does its job.</p>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {results.map(([title, text]) => (
+          <div class="sticker panel p-6">
+            <h3 class="font-impact text-xl uppercase">{title}</h3>
+            <p class="mt-2 font-body text-sm leading-relaxed text-ink/80">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== YOU'RE STILL READING ===================== -->
+  <section class="halftone-teal border-y-4 border-ink">
+    <div class="mx-auto max-w-3xl px-5 py-16 text-center">
+      <div class="ink mb-6 inline-block rotate-1 bg-mustard px-5 py-2 font-display text-sm uppercase shadow-comic">
+        Hey. You're still reading.
+      </div>
+      <h2 class="font-impact text-4xl uppercase text-cream sm:text-5xl">
+        You scrolled this far<br />for a reason.
+      </h2>
+      <p class="mx-auto mt-6 max-w-2xl font-body text-lg leading-relaxed text-cream">
+        Something on this page grabbed you and kept you here. That pull where you can't stop reading?
+      </p>
+      <p class="mx-auto mt-4 max-w-2xl font-body text-xl font-700 leading-relaxed text-cream">
+        That is exactly what we build for your customers.
+      </p>
+      <p class="mx-auto mt-4 max-w-2xl font-body text-lg leading-relaxed text-cream/85">
+        Someone looks up your business and can't stop reading. They meant to check your hours and now they're filling out your contact form. Your site sells them on you before you ever say a word.
+      </p>
+
+      <div class="ink mx-auto mt-10 max-w-xl bg-cream p-7 shadow-comic-lg">
+        <p class="font-impact text-2xl uppercase text-ink">
+          We build sites that captivate.<br />Sites that make someone feel something.<br />Sites that close.
+        </p>
+      </div>
+
+      <p class="mt-10 font-impact text-2xl uppercase text-cream">
+        If this page did that to you, imagine what we can do for yours.
+      </p>
+      <div class="mt-8">
+        <a
+          href="#contact"
+          class="sticker ink dollar-cta inline-block bg-comic-red px-8 py-4 font-display text-lg uppercase text-cream shadow-comic"
+        >
+          Build Me a Site That Captivates
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY JOSH ===================== -->
+  <section class="halftone-red border-b-4 border-ink">
+    <div class="mx-auto max-w-5xl px-5 py-16">
+      <div class="mb-10 text-center" data-reveal>
+        <div class="ink-2 inline-block -rotate-1 bg-mustard px-3 py-1 font-body text-sm font-800 uppercase tracking-wide shadow-comic-sm">
+          Behind the Broom
+        </div>
+        <h2 class="mt-4 font-impact text-4xl uppercase text-cream sm:text-5xl">
+          I'm Not an Agency.<br />I'm Just a Dude.
+        </h2>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-[1fr_1.4fr] md:items-start">
+        <div class="panel relative aspect-[4/5] overflow-hidden p-0">
+          <img
+            src="/josh/josh-exec.jpg"
+            alt="Josh Vogel, founder of The Dust Bunny"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="panel p-7 md:p-9">
+          <h3 class="font-impact text-3xl uppercase leading-none">Josh Vogel</h3>
+          <div class="mt-1 font-display text-sm uppercase tracking-wide text-comic-red">
+            Founder · Builder · Bunny-in-Chief
+          </div>
+
+          <p class="mt-5 font-body leading-relaxed text-ink/85">
+            I have two Dobermans, a beautiful wife, and a laptop. That's the operation. No account managers. No junior devs. No one forwarding your email to someone else. You talk to me. You work with me. We build something great for your business together.
+          </p>
+
+          <p class="mt-4 font-body leading-relaxed text-ink/85">
+            I joined the Army. Before that I was deep in high-end sales and competitive bodybuilding — two worlds that drill one lesson into you fast: results are the only thing that matter. The Army confirmed it in a different uniform.
+          </p>
+
+          <p class="mt-4 font-body leading-relaxed text-ink/85">
+            After I got out I went back to sales. Earned a master's degree in workforce development and leadership from LSU. Now finishing my MBA — my second master's — at UT. Somewhere in between I needed a mental outlet, so I started learning to code. X posts. YouTube at midnight. One concept at a time until it all clicked.
+          </p>
+
+          <p class="mt-4 font-body leading-relaxed text-ink/85">
+            What I found when I got good at it made me angry. Small businesses were getting completely left behind. Big agencies charging $10k, $15k, $25k for sites smaller businesses needed just as badly but couldn't afford. So they got nothing — or they got a Wix template and called it done.
+          </p>
+
+          <p class="mt-5 font-impact text-xl uppercase text-ink">
+            I built The Dust Bunny to fix that.
+          </p>
+        </div>
+      </div>
+
+      <!-- Steakhouse panel -->
+      <div class="ink mt-10 bg-cream p-8 shadow-comic-lg md:p-10" data-reveal>
+        <p class="font-body text-lg leading-relaxed text-ink/85">
+          Here's the analogy that says it better than anything else I've got.
+        </p>
+        <p class="mt-4 font-body text-lg leading-relaxed text-ink/85">
+          Someone recommends a steakhouse. Best steak of your life, they say. You pull up the website and there's nothing there. A Facebook page from 2018 and a blurry photo of a ribeye.
+        </p>
+        <p class="mt-4 font-body text-lg leading-relaxed text-ink/85">
+          You start doing the math. If this place is charging $400 for dinner and can't be bothered to put together a real website, do they actually believe in what they're serving? Or are they coasting and hoping nobody looks too hard?
+        </p>
+        <p class="mt-4 font-body text-xl font-700 text-ink">
+          That doubt is quiet. But it wins more often than you think.
+        </p>
+        <div class="ink-2 mt-6 bg-comic-red px-6 py-5 shadow-comic-sm">
+          <p class="font-impact text-2xl uppercase text-cream">
+            You are that steakhouse to someone right now.
+          </p>
+        </div>
+        <p class="mt-6 font-body text-lg leading-relaxed text-ink/85">
+          A real business. Real work. Real results. And somewhere out there, a person who needs exactly what you do just pulled up your site, got that quiet doubt, and called your competitor instead.
+        </p>
+        <p class="mt-5 font-impact text-2xl uppercase text-ink">
+          Be the standard. Make your competitors uncomfortable.<br />Make people pull up your site and think: yeah, these are the ones.
+        </p>
+        <p class="mt-4 font-display text-lg uppercase text-comic-red tracking-wide">
+          That is what we build.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROOF ===================== -->
+  <section class="halftone-mustard border-b-4 border-ink">
+    <div class="mx-auto max-w-6xl px-5 py-16">
+      <div class="mb-12 text-center" data-reveal>
+        <div class="ink-2 inline-block rotate-1 bg-ink px-3 py-1 font-body text-sm font-800 uppercase tracking-wide text-cream shadow-comic-sm">
+          The Work
+        </div>
+        <h2 class="mt-4 font-impact text-4xl uppercase sm:text-5xl">Real Clients. Real Results.</h2>
+        <p class="mt-3 font-body text-ink/70">Here's what happens when a small business gets a site built to win.</p>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2" data-stagger>
+        {clients.map((c) => (
+          <div class="sticker panel overflow-hidden p-0">
+            <div class={`${c.fill} border-b-4 border-ink flex h-14 items-center px-5`}>
+              <span class={`font-display ${c.textColor} text-sm uppercase tracking-widest`}>{c.cat}</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-impact text-2xl uppercase leading-tight">{c.name}</h3>
+              <p class="mt-2 font-body text-sm leading-relaxed text-ink/80">{c.result}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center" data-reveal>
+        <p class="font-display text-xl uppercase text-ink">Your business could be next.</p>
+        <div class="mt-6">
+          <a
+            href="#contact"
+            class="sticker ink dollar-cta inline-block bg-comic-red px-7 py-3 font-display text-base uppercase text-cream shadow-comic"
+          >
+            Let's Build Yours
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OBJECTION DEMOLITION ===================== -->
+  <section class="border-b-4 border-ink bg-cream">
+    <div class="mx-auto max-w-4xl px-5 py-16">
+      <div class="mb-12 text-center" data-reveal>
+        <div class="ink-2 inline-block -rotate-1 bg-comic-red px-3 py-1 font-body text-sm font-800 uppercase tracking-wide text-cream shadow-comic-sm">
+          I Know What You're Thinking
+        </div>
+        <h2 class="mt-4 font-impact text-4xl uppercase sm:text-5xl">Let Me Guess.</h2>
+      </div>
+
+      <div class="space-y-5" data-stagger>
+        {objections.map((o) => (
+          <div class="sticker panel overflow-hidden">
+            <div class={`${o.fill} border-b-4 border-ink px-6 py-4`}>
+              <p class="font-impact text-2xl uppercase text-cream">"{o.q}"</p>
+            </div>
+            <div class="p-6">
+              <p class="font-body leading-relaxed text-ink/85">{o.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== THE OFFER ===================== -->
+  <section class="halftone-ink border-b-4 border-ink">
+    <div class="mx-auto max-w-4xl px-5 py-16">
+      <div class="mb-12 text-center" data-reveal>
+        <div class="ink-2 inline-block rotate-1 bg-mustard px-3 py-1 font-body text-sm font-800 uppercase tracking-wide shadow-comic-sm">
+          The Offer
+        </div>
+        <h2 class="mt-4 font-impact text-4xl uppercase text-cream sm:text-5xl">Here's Exactly What You're Getting.</h2>
+        <p class="mt-3 font-body text-cream/60">No mystery packages. No starting-at bait-and-switch. This is the work.</p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2" data-stagger>
+        {deliverables.map(([title, desc]) => (
+          <div class="sticker ink bg-cream p-5 shadow-comic-sm">
+            <div class="flex items-start gap-3">
+              <div class="halftone-teal ink-2 mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center font-impact text-base text-cream shadow-comic-sm">✓</div>
+              <div>
+                <p class="font-display text-sm uppercase font-700">{title}</p>
+                <p class="mt-1 font-body text-xs leading-relaxed text-ink/70">{desc}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 text-center" data-reveal>
+        <p class="font-body text-cream/60">
+          Pricing is scoped to your project. We talk about it on the call. No surprises. No upsell pressure.
+        </p>
+        <div class="mt-6">
+          <a
+            href="#contact"
+            class="sticker ink dollar-cta inline-block bg-mustard px-7 py-3 font-display text-base uppercase text-ink shadow-comic"
+          >
+            Tell Me About Your Business
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== URGENCY ===================== -->
+  <section class="border-b-4 border-ink bg-cream">
+    <div class="mx-auto max-w-3xl px-5 py-16 text-center">
+      <div class="ink-2 inline-block -rotate-1 bg-comic-red px-3 py-1 font-body text-sm font-800 uppercase tracking-wide text-cream shadow-comic-sm">
+        One Thing Before You Leave
+      </div>
+      <h2 class="mt-4 font-impact text-4xl uppercase sm:text-5xl">I Take a Limited Number of Clients.</h2>
+
+      <div class="ink mt-8 bg-cream p-8 shadow-comic text-left" data-reveal>
+        <p class="font-body text-lg leading-relaxed text-ink/85">
+          That is not a sales line. It is how I keep the quality where it needs to be. Every site gets my full attention. I can't do that building thirty at once. When my roster is full, new projects go on a waitlist.
+        </p>
+        <p class="mt-4 font-body text-lg font-700 text-ink">
+          Right now, I have open slots. I won't have them forever.
+        </p>
+        <p class="mt-4 font-body text-lg leading-relaxed text-ink/85">
+          The business that books this week gets its site this week. The business that thinks about it might be waiting behind three others.
+        </p>
+        <p class="mt-4 font-body text-lg leading-relaxed text-ink/85">
+          You are not losing customers in dramatic ways. You are losing them quietly, one Google search at a time, to whoever has the better-looking, faster-loading, higher-ranking site.
+        </p>
+        <p class="mt-5 font-impact text-2xl uppercase text-comic-red">
+          That ends the day you launch.
+        </p>
+      </div>
+
+      <div class="mt-10">
+        <a
+          href="#contact"
+          class="sticker ink dollar-cta inline-block bg-comic-red px-8 py-4 font-display text-lg uppercase text-cream shadow-comic"
+        >
+          Claim Your Spot
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FINAL CLOSE ===================== -->
+  <section class="halftone-ink border-b-4 border-ink">
+    <div class="mx-auto max-w-3xl px-5 py-20 text-center">
+      <h2 class="font-impact text-5xl uppercase leading-none text-cream sm:text-6xl md:text-7xl" data-reveal-letters>
+        Every Minute<br />
+        You Wait,<br />
+        <span class="text-comic-red">They Win.</span>
+      </h2>
+
+      <p class="mx-auto mt-8 max-w-xl font-body text-lg leading-relaxed text-cream/80">
+        You found this page for a reason. Maybe your site embarrasses you. Maybe you don't have one at all. Maybe you've been meaning to fix it for two years.
+      </p>
+      <p class="mx-auto mt-4 max-w-xl font-body text-lg leading-relaxed text-cream/80">
+        It doesn't get easier to fix. It just gets more expensive to ignore.
+      </p>
+      <p class="mx-auto mt-4 max-w-xl font-body text-xl font-700 leading-relaxed text-cream">
+        You have a real business. Built with real work. Real time. Real sacrifice. It deserves a website that shows the world exactly that.
+      </p>
+
+      <div class="ink-2 mx-auto mt-10 max-w-sm bg-mustard px-6 py-5 shadow-comic">
+        <p class="font-impact text-3xl uppercase text-ink">Don't get left in the dust.</p>
+      </div>
+
+      <div class="mt-10">
+        <a
+          href="#contact"
+          class="sticker ink dollar-cta inline-block bg-comic-red px-10 py-5 font-display text-xl uppercase text-cream shadow-comic-lg"
+        >
+          Stop Losing Customers. Get Your Site.
+        </a>
+        <p class="mt-5 font-body text-sm text-cream/50">
+          Takes 2 minutes to reach out. No commitment. No pressure. Just a real conversation about what your business needs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT FORM ===================== -->
+  <section id="contact" class="mx-auto max-w-3xl px-5 py-20">
+    <div data-dust-peek class="relative">
+      <div class="dust-ears pointer-events-none absolute left-6 top-0 z-0 w-20 sm:left-10 sm:w-24">
+        <Mascot />
+      </div>
+      <div class="panel relative z-10 p-8 md:p-12">
+        <div class="burst absolute -right-5 -top-6 flex h-24 w-24 rotate-12 items-center justify-center text-center">
+          <span class="font-impact text-sm uppercase leading-none">Free<br />Sweep!</span>
+        </div>
+        <h2 class="font-impact text-3xl uppercase sm:text-4xl">Let's get you found.</h2>
+        <p class="mt-3 font-body text-ink/80">
+          Tell me about your business and I'll send back a no-pressure plan to grow your traffic.
+        </p>
+
+        <form
+          name="why-hire-me-quote"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          action="/thanks"
+          class="mt-8 grid gap-5"
+        >
+          <p class="hidden" aria-hidden="true">
+            <label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+          <input type="hidden" name="form-name" value="why-hire-me-quote" />
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="block">
+              <span class="font-body text-sm font-700 uppercase tracking-wide">Name</span>
+              <input required name="name" type="text" class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm" />
+            </label>
+            <label class="block">
+              <span class="font-body text-sm font-700 uppercase tracking-wide">Business Name</span>
+              <input required name="business" type="text" class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm" />
+            </label>
+          </div>
+
+          <label class="block">
+            <span class="font-body text-sm font-700 uppercase tracking-wide">What kind of business do you run?</span>
+            <input required name="business_type" type="text" class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm" />
+          </label>
+
+          <label class="block">
+            <span class="font-body text-sm font-700 uppercase tracking-wide">Do you currently have a website?</span>
+            <select name="has_site" class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm">
+              <option value="no">No website</option>
+              <option value="bad">Yes, but it's embarrassing</option>
+              <option value="okay">Yes, but it doesn't perform</option>
+              <option value="good">Yes and it's decent</option>
+            </select>
+          </label>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="block">
+              <span class="font-body text-sm font-700 uppercase tracking-wide">Email</span>
+              <input required name="email" type="email" class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm" />
+            </label>
+            <label class="block">
+              <span class="font-body text-sm font-700 uppercase tracking-wide">Current Site (if any)</span>
+              <input name="current_site" type="text" placeholder="yourbusiness.com" class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm" />
+            </label>
+          </div>
+
+          <label class="block">
+            <span class="font-body text-sm font-700 uppercase tracking-wide">What's your biggest pain point right now?</span>
+            <textarea required name="message" rows="4" class="ink-2 mt-1 w-full bg-cream px-3 py-2 font-body focus:outline-none focus:shadow-comic-sm"></textarea>
+          </label>
+
+          <button
+            type="submit"
+            class="sticker ink dollar-cta bg-comic-red px-7 py-3 font-display text-base uppercase text-cream shadow-comic"
+          >
+            Let's Build Something
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<!-- ===================== DOLLAR SIGN BURST ===================== -->
+<script is:inline>
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var dollarSVG = '<svg viewBox="0 0 18 22" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" aria-hidden="true"><text x="9" y="18" font-family="Impact,Arial Narrow,sans-serif" font-size="19" font-weight="900" text-anchor="middle" fill="#16a34a" stroke="#1a1714" stroke-width="2" paint-order="stroke">$</text></svg>';
+
+    var configs = [
+      { dx: '-52px', dy: '-62px', rot: '-18deg', delay: '0s',    size: '22px' },
+      { dx: '56px',  dy: '-66px', rot: '22deg',  delay: '0.04s', size: '18px' },
+      { dx: '-70px', dy: '-22px', rot: '-30deg', delay: '0.09s', size: '26px' },
+      { dx: '72px',  dy: '-28px', rot: '14deg',  delay: '0.07s', size: '20px' },
+      { dx: '-30px', dy: '-78px', rot: '-6deg',  delay: '0.14s', size: '16px' },
+      { dx: '34px',  dy: '-74px', rot: '34deg',  delay: '0.02s', size: '24px' },
+      { dx: '2px',   dy: '-84px', rot: '4deg',   delay: '0.11s', size: '19px' },
+      { dx: '-50px', dy: '-48px', rot: '-40deg', delay: '0.06s', size: '16px' },
+    ];
+
+    document.querySelectorAll('.dollar-cta').forEach(function (btn) {
+      // ensure pieces can overflow the button visually
+      btn.style.overflow = 'visible';
+
+      configs.forEach(function (cfg) {
+        var span = document.createElement('span');
+        span.className = 'dollar-burst-piece';
+        span.style.cssText = '--dx:' + cfg.dx + ';--dy:' + cfg.dy + ';--rot:' + cfg.rot + ';--delay:' + cfg.delay + ';--size:' + cfg.size;
+        span.innerHTML = dollarSVG;
+        btn.appendChild(span);
+      });
+
+      // Click / tap trigger — fires on mobile where hover doesn't exist
+      btn.addEventListener('click', function () {
+        btn.classList.add('dollar-clicked');
+        setTimeout(function () { btn.classList.remove('dollar-clicked'); }, 950);
+      });
+    });
+  })();
+</script>

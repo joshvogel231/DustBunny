@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bungee&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#f4ead2; --ink:#1a1714; --red:#e23b2e; --mustard:#f2b93b; --teal:#2a9d9b; --dust:#c9b79c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    width: 1080px; height: 1350px;
+    background-color: var(--cream);
+    background-image: radial-gradient(rgba(0,0,0,0.07) 1.5px, transparent 1.6px);
+    background-size: 12px 12px;
+    color: var(--ink);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  /* ===== top brand bar ===== */
+  .brand-bar {
+    height: 140px;
+    background: var(--red);
+    background-image: radial-gradient(rgba(0,0,0,0.18) 2px, transparent 2.2px);
+    background-size: 12px 12px;
+    border-bottom: 6px solid var(--ink);
+    display: flex; align-items: center; gap: 18px;
+    padding: 0 40px;
+    color: var(--cream);
+  }
+  .brand-bar .mascot { width: 96px; height: 96px; flex-shrink: 0; overflow: visible; }
+  .brand-bar .wm {
+    font-family: 'Bungee', sans-serif;
+    font-size: 44px; line-height: 1; letter-spacing: 0.01em;
+  }
+  /* ===== browser mockup ===== */
+  .browser-wrap {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    padding: 60px 80px 30px;
+  }
+  .browser {
+    width: 100%;
+    background: var(--cream);
+    border: 6px solid var(--ink);
+    box-shadow: 14px 14px 0 0 var(--ink);
+    border-radius: 4px;
+    overflow: hidden;
+    transform: rotate(-1deg);
+  }
+  .browser-chrome {
+    height: 44px;
+    background: var(--cream);
+    border-bottom: 4px solid var(--ink);
+    display: flex; align-items: center; gap: 9px;
+    padding: 0 18px;
+  }
+  .dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink); }
+  .dot.r { background: var(--red); }
+  .dot.y { background: var(--mustard); }
+  .dot.g { background: var(--teal); }
+  .browser-body {
+    height: 640px;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .browser-body img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(1.4);
+    transform-origin: top center;
+  }
+  /* ===== bottom info ===== */
+  .info {
+    padding: 30px 60px 50px;
+    border-top: 6px solid var(--ink);
+    background: var(--cream);
+    position: relative;
+  }
+  .info h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 84px;
+    line-height: 0.92;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+  }
+  .info .meta {
+    margin-top: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .info p {
+    margin: 16px 0 0;
+    font-size: 22px;
+    line-height: 1.4;
+    color: rgba(26,23,20,0.85);
+  }
+  .info .tag {
+    position: absolute;
+    right: 60px;
+    bottom: 28px;
+    font-family: 'Bungee', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: rgba(26,23,20,0.55);
+  }
+</style>
+</head>
+<body>
+  <!-- top -->
+  <div class="brand-bar">
+    __MASCOT__
+    <div class="wm">BUILT BY THE DUST BUNNY</div>
+  </div>
+
+  <!-- browser mockup -->
+  <div class="browser-wrap">
+    <div class="browser">
+      <div class="browser-chrome">
+        <span class="dot r"></span>
+        <span class="dot y"></span>
+        <span class="dot g"></span>
+      </div>
+      <div class="browser-body">
+        <img src="__SCREENSHOT__" alt="">
+      </div>
+    </div>
+  </div>
+
+  <!-- bottom info -->
+  <div class="info">
+    <h2>__NAME__</h2>
+    <div class="meta">__META__</div>
+    <p>__BLURB__</p>
+    <div class="tag">DON'T GET LEFT IN THE DUST.</div>
+  </div>
+</body>
+</html>

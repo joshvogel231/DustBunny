@@ -1,0 +1,1052 @@
+@import "tailwindcss";
+
+/* ===== The Dust Bunny — Vintage Comic / Americana design system ===== */
+
+@theme {
+  /* Newsprint + comic ink palette */
+  --color-cream: #f4ead2;
+  --color-newsprint: #efe3c8;
+  --color-ink: #1a1714;
+  --color-comic-red: #e23b2e;
+  --color-comic-red-dark: #b32519;
+  --color-mustard: #f2b93b;
+  --color-teal: #2a9d9b;
+  --color-teal-dark: #1f7a78;
+  --color-dust: #c9b79c;
+  --color-dust-dark: #8a7a5e;
+  --color-paper-shadow: #d8c9a8;
+
+  /* Type */
+  --font-display: "Bungee", system-ui, sans-serif;
+  --font-impact: "Anton", "Arial Narrow", sans-serif;
+  --font-body: "Space Grotesk", system-ui, sans-serif;
+
+  /* Comic hard shadow */
+  --shadow-comic: 6px 6px 0 0 var(--color-ink);
+  --shadow-comic-lg: 10px 10px 0 0 var(--color-ink);
+  --shadow-comic-sm: 3px 3px 0 0 var(--color-ink);
+}
+
+/* (View transitions intentionally NOT enabled here — we use a custom CRT
+   power-off transition on tagged links instead. See .crt-warp / crt-off / crt-on
+   in the components layer below.) */
+
+/* ===== Custom text selection ===== */
+::selection {
+  background: var(--color-mustard);
+  color: var(--color-ink);
+  text-shadow: none;
+}
+::-moz-selection {
+  background: var(--color-mustard);
+  color: var(--color-ink);
+}
+
+/* ===== Comic-styled scrollbar ===== */
+/* Firefox */
+html {
+  scrollbar-width: auto;
+  scrollbar-color: var(--color-dust) var(--color-paper-shadow);
+}
+/* WebKit (Chrome / Safari / Edge) */
+::-webkit-scrollbar { width: 14px; height: 14px; }
+::-webkit-scrollbar-track {
+  background: var(--color-paper-shadow);
+  border-left: 3px solid var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-dust);
+  border: 3px solid var(--color-ink);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-comic-red); }
+::-webkit-scrollbar-corner { background: var(--color-paper-shadow); }
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    /* Subtle newsprint halftone behind everything */
+    background-image: radial-gradient(var(--color-paper-shadow) 1px, transparent 1px);
+    background-size: 7px 7px;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-impact);
+    letter-spacing: 0.01em;
+    line-height: 0.95;
+  }
+}
+
+@layer components {
+  /* Bold ink outline */
+  .ink {
+    border: 4px solid var(--color-ink);
+  }
+  .ink-2 {
+    border: 2px solid var(--color-ink);
+  }
+
+  /* Hard comic-book drop shadow */
+  .shadow-comic {
+    box-shadow: var(--shadow-comic);
+  }
+  .shadow-comic-lg {
+    box-shadow: var(--shadow-comic-lg);
+  }
+  .shadow-comic-sm {
+    box-shadow: var(--shadow-comic-sm);
+  }
+
+  /* Ben-Day / halftone dot fills */
+  .halftone-red {
+    background-color: var(--color-comic-red);
+    background-image: radial-gradient(rgba(0,0,0,0.18) 1.5px, transparent 1.6px);
+    background-size: 8px 8px;
+  }
+  .halftone-mustard {
+    background-color: var(--color-mustard);
+    background-image: radial-gradient(rgba(0,0,0,0.15) 1.5px, transparent 1.6px);
+    background-size: 8px 8px;
+  }
+  .halftone-teal {
+    background-color: var(--color-teal);
+    background-image: radial-gradient(rgba(255,255,255,0.25) 1.5px, transparent 1.6px);
+    background-size: 8px 8px;
+  }
+  .halftone-ink {
+    background-color: var(--color-ink);
+    background-image: radial-gradient(rgba(255,255,255,0.12) 1.5px, transparent 1.6px);
+    background-size: 9px 9px;
+  }
+
+  /* Neutral light-brown halftone — matches the loading screen body tone */
+  .halftone-dust {
+    background-color: var(--color-dust);
+    background-image: radial-gradient(rgba(0,0,0,0.12) 1.5px, transparent 1.6px);
+    background-size: 8px 8px;
+  }
+
+  /* Comic panel */
+  .panel {
+    background-color: var(--color-cream);
+    border: 4px solid var(--color-ink);
+    box-shadow: var(--shadow-comic);
+  }
+
+  /* Action burst / starburst label */
+  .burst {
+    background: var(--color-mustard);
+    border: 3px solid var(--color-ink);
+    clip-path: polygon(
+      50% 0%, 61% 15%, 79% 8%, 75% 28%, 95% 28%, 82% 44%, 100% 55%,
+      80% 62%, 90% 82%, 68% 76%, 64% 97%, 50% 82%, 36% 97%, 32% 76%,
+      10% 82%, 20% 62%, 0% 55%, 18% 44%, 5% 28%, 25% 28%, 21% 8%, 39% 15%
+    );
+  }
+
+  /* Speech bubble tail */
+  .speech::after {
+    content: "";
+    position: absolute;
+    bottom: -18px;
+    left: 40px;
+    width: 0;
+    height: 0;
+    border-left: 0 solid transparent;
+    border-right: 26px solid transparent;
+    border-top: 22px solid var(--color-ink);
+  }
+  .speech::before {
+    content: "";
+    position: absolute;
+    bottom: -11px;
+    left: 44px;
+    width: 0;
+    height: 0;
+    border-left: 0 solid transparent;
+    border-right: 18px solid transparent;
+    border-top: 15px solid var(--color-cream);
+    z-index: 1;
+  }
+
+  /* Diagonal action-line backdrop */
+  .action-lines {
+    background-image: repeating-conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg 6deg,
+      rgba(0,0,0,0.05) 6deg 12deg
+    );
+  }
+
+  /* Slightly skewed sticker feel on hover + magnetic offset via custom props */
+  .sticker {
+    transition: transform 0.18s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.12s ease;
+    --mag-x: 0px;
+    --mag-y: 0px;
+  }
+  .sticker:hover {
+    transform: translate(calc(-2px + var(--mag-x)), calc(-2px + var(--mag-y))) rotate(-1deg);
+    box-shadow: var(--shadow-comic-lg);
+  }
+
+  /* ===== Typewriter effect ===== */
+  /* On JS-enabled pages, hide [data-typewriter] elements until the script clears
+     them and starts typing — prevents the full text flashing on first paint. */
+  html.js .typewriter[data-typewriter] {
+    visibility: hidden;
+  }
+  html.js .typewriter.is-active,
+  html.js .typewriter.is-done {
+    visibility: visible;
+  }
+  /* Blinking caret while typing */
+  .typewriter.is-active::after {
+    content: "|";
+    display: inline-block;
+    margin-left: 2px;
+    font-weight: 400;
+    color: inherit;
+    animation: typewriter-blink 0.7s step-end infinite;
+  }
+  @keyframes typewriter-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .typewriter[data-typewriter] { visibility: visible; }
+    .typewriter::after { display: none; }
+  }
+
+  /* ===== Hop-Across Sweep page transition =====
+     The mascot scoots across the bottom of the screen sweeping the floor.
+     A dust cloud billows up behind him, filling the screen by the time he exits.
+     On the new page, the dust settles downward revealing the new content. */
+  .sweep-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    display: none;
+  }
+  html.sweep-out .sweep-overlay,
+  html.sweep-in .sweep-overlay {
+    display: block;
+  }
+  html.sweep-out,
+  html.sweep-in {
+    overflow: hidden;
+  }
+
+  .sweep-overlay .sweep-dust {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-dust);
+    background-image:
+      radial-gradient(rgba(0, 0, 0, 0.20) 3px, transparent 3.2px),
+      radial-gradient(rgba(255, 255, 255, 0.18) 2px, transparent 2.2px);
+    background-size: 16px 16px, 9px 9px;
+    opacity: 0;
+    /* Dust billows up from bottom-right following the mascot */
+    clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+  }
+
+  .sweep-overlay .sweep-mascot {
+    position: absolute;
+    bottom: 2%;
+    left: 105%;
+    width: 200px;
+    transform: translateY(0) rotate(12deg);
+    transform-origin: center bottom;
+    filter: drop-shadow(6px 6px 0 rgba(26, 23, 20, 0.35));
+    will-change: transform, left;
+  }
+  .sweep-overlay .sweep-mascot svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ===== EXIT: mascot sweeps floor right→left, dust billows up behind ===== */
+  html.sweep-out .sweep-mascot {
+    animation: sweep-mascot-cross 1.6s ease-in-out forwards;
+  }
+  html.sweep-out .sweep-dust {
+    animation: sweep-dust-wipe-in 1.6s ease-in forwards;
+  }
+
+  @keyframes sweep-mascot-cross {
+    /* — Scoot in from right, leaning forward like sweeping — */
+    0%   { left: 105%; transform: translateY(0)    rotate(12deg); }
+    /* Sweep stroke 1: lean forward */
+    6%   { left: 88%;  transform: translateY(-8px)  rotate(18deg); }
+    /* Pull back */
+    12%  { left: 78%;  transform: translateY(0)     rotate(6deg); }
+    /* Sweep stroke 2 */
+    18%  { left: 68%;  transform: translateY(-10px) rotate(20deg); }
+    24%  { left: 58%;  transform: translateY(0)     rotate(6deg); }
+    /* Sweep stroke 3 */
+    30%  { left: 50%;  transform: translateY(-10px) rotate(18deg); }
+    36%  { left: 42%;  transform: translateY(0)     rotate(8deg); }
+    /* — Pause: admire the work, little wiggle — */
+    42%  { left: 40%;  transform: translateY(-4px)  rotate(-4deg); }
+    48%  { left: 40%;  transform: translateY(0)     rotate(6deg); }
+    54%  { left: 40%;  transform: translateY(-4px)  rotate(-2deg); }
+    58%  { left: 40%;  transform: translateY(0)     rotate(8deg); }
+    /* — Resume sweeping off-screen — */
+    64%  { left: 32%;  transform: translateY(-10px) rotate(20deg); }
+    70%  { left: 22%;  transform: translateY(0)     rotate(6deg); }
+    76%  { left: 14%;  transform: translateY(-10px) rotate(18deg); }
+    82%  { left: 4%;   transform: translateY(0)     rotate(6deg); }
+    90%  { left: -6%;  transform: translateY(-8px)  rotate(16deg); }
+    100% { left: -22%; transform: translateY(0)     rotate(10deg); }
+  }
+
+  /* Dust billows up from behind the mascot, filling the screen */
+  @keyframes sweep-dust-wipe-in {
+    0%   { opacity: 0; clip-path: polygon(100% 100%, 100% 100%, 100% 100%); }
+    6%   { opacity: 1; }
+    /* Dust cloud expands from bottom-right toward top-left as mascot sweeps */
+    20%  { opacity: 1; clip-path: polygon(100% 100%, 60% 100%, 70% 40%, 100% 20%); }
+    36%  { opacity: 1; clip-path: polygon(100% 100%, 40% 100%, 45% 10%, 100% 0); }
+    /* Hold while mascot pauses */
+    42%  { opacity: 1; clip-path: polygon(100% 100%, 38% 100%, 42% 0, 100% 0); }
+    58%  { opacity: 1; clip-path: polygon(100% 100%, 36% 100%, 38% 0, 100% 0); }
+    /* Resume filling as mascot sweeps off */
+    80%  { opacity: 1; clip-path: polygon(100% 100%, 10% 100%, 5% 0, 100% 0); }
+    100% { opacity: 1; clip-path: polygon(100% 100%, -10% 100%, -10% 0, 100% 0); }
+  }
+
+  /* ===== ENTRY: dust settles down revealing the new page ===== */
+  html.sweep-in .sweep-dust {
+    opacity: 1;
+    clip-path: polygon(100% 100%, -10% 100%, -10% 0, 100% 0);
+    animation: sweep-dust-wipe-out 0.85s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  }
+  /* hide mascot on entry — he's gone */
+  html.sweep-in .sweep-mascot {
+    display: none;
+  }
+  @keyframes sweep-dust-wipe-out {
+    /* Dust settles downward — like it's falling to the floor after being swept up */
+    0%   { opacity: 1; clip-path: polygon(-10% 0, 100% 0, 100% 100%, -10% 100%); transform: translateY(0); }
+    60%  { opacity: 0.6; }
+    100% { opacity: 0; clip-path: polygon(-10% 100%, 100% 100%, 100% 100%, -10% 100%); transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.sweep-out .sweep-overlay,
+    html.sweep-in .sweep-overlay { display: none !important; }
+  }
+
+  /* ===== Skip-to-content link (accessibility) ===== */
+  .skip-link {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 100;
+    background: var(--color-ink);
+    color: var(--color-cream);
+    padding: 10px 16px;
+    border: 2px solid var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 13px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transform: translateY(-150%);
+    transition: transform 0.18s ease;
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+    outline: 3px solid var(--color-mustard);
+    outline-offset: 2px;
+  }
+
+  /* ===== "Currently building" status widget ===== */
+  .status-widget {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    z-index: 45;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--color-cream);
+    border: 3px solid var(--color-ink);
+    box-shadow: var(--shadow-comic-sm);
+    padding: 8px 14px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+    pointer-events: none;
+  }
+  .status-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #1ec774;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+    animation: status-pulse 2.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes status-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(0.85); }
+  }
+  @media (max-width: 640px) {
+    .status-widget { display: none; }
+  }
+
+  /* ===== Back-to-top button ===== */
+  .btt {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 45;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--color-comic-red);
+    color: var(--color-cream);
+    border: 3px solid var(--color-ink);
+    box-shadow: var(--shadow-comic-sm);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.18s cubic-bezier(0.34, 1.4, 0.64, 1),
+                box-shadow 0.18s ease, opacity 0.2s ease;
+    opacity: 1;
+  }
+  .btt[hidden] {
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px) scale(0.9);
+  }
+  .btt:hover {
+    transform: translate(-2px, -2px) rotate(-4deg);
+    box-shadow: var(--shadow-comic);
+    background: var(--color-comic-red-dark);
+  }
+  .btt svg { width: 26px; height: 26px; }
+  @media (max-width: 640px) {
+    .btt { right: 14px; bottom: 80px; } /* clear room for thumb / status widget */
+  }
+
+
+
+  /* ===== Section reveal on scroll (opt-in via data-reveal) ===== */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-reveal].is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== Letter-by-letter heading reveal ===== */
+  [data-reveal-letters] .letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.4em) rotate(-6deg);
+    transition:
+      opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  [data-reveal-letters].letters-in .letter {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+
+  /* ===== Konami code chaos mode ===== */
+  body.konami-chaos * {
+    animation: konami-wiggle 0.4s ease-in-out infinite alternate !important;
+  }
+  body.konami-chaos {
+    background: var(--color-mustard) !important;
+  }
+  @keyframes konami-wiggle {
+    from { transform: rotate(-2deg) translate(0, -2px); }
+    to   { transform: rotate(2deg) translate(0, 2px); }
+  }
+
+  /* ===== X-ray construction mode (hold Shift) ===== */
+  body.xray * {
+    outline: 1px dashed rgba(226, 59, 46, 0.55) !important;
+    outline-offset: -1px !important;
+  }
+  body.xray section,
+  body.xray header,
+  body.xray footer,
+  body.xray main {
+    outline: 2px solid rgba(226, 59, 46, 0.85) !important;
+  }
+  body.xray::after {
+    content: "X-RAY · HOLD SHIFT";
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 200;
+    background: var(--color-comic-red);
+    color: var(--color-cream);
+    border: 2px solid var(--color-ink);
+    padding: 6px 12px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    pointer-events: none;
+  }
+
+  /* ===== Print stylesheet ===== */
+  @media print {
+    /* hide chrome and animation-heavy decoration */
+    header, footer, .skip-link, .status-widget, .btt,
+    #dust-corner, .speech, .action-lines,
+    .work-trigger, .testimonial-arrow, .testimonial-dot {
+      display: none !important;
+    }
+    /* simplify background */
+    body {
+      background: white !important;
+      color: black;
+      font-size: 11pt;
+    }
+    .halftone-red, .halftone-mustard, .halftone-teal, .halftone-ink {
+      background: white !important;
+      color: black !important;
+    }
+    h1, h2, h3 { page-break-after: avoid; }
+    section { page-break-inside: avoid; }
+    a[href]::after {
+      content: " (" attr(href) ")";
+      font-size: 9pt;
+      color: #666;
+    }
+    /* don't print fragments */
+    a[href^="#"]::after,
+    a[href^="javascript:"]::after { content: ""; }
+  }
+
+  /* ===== Logo celebration (triple-click easter egg) ===== */
+  header a[href="/#top"] svg,
+  header a[href="#top"] svg {
+    transition: transform 0.2s ease;
+  }
+  .logo-celebrate svg {
+    animation: logo-spin-bounce 1.8s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+  @keyframes logo-spin-bounce {
+    0%   { transform: scale(1) rotate(0deg); }
+    25%  { transform: scale(1.35) rotate(15deg); }
+    50%  { transform: scale(0.9) rotate(-12deg); }
+    75%  { transform: scale(1.2) rotate(8deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  /* ===== Form submit celebration ===== */
+  button.sticker.is-celebrating {
+    pointer-events: none;
+    animation: btn-celebrate-shake 0.85s ease;
+  }
+  button.sticker.is-celebrating .dust-burst-piece {
+    animation: dust-burst-fly 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) forwards;
+  }
+  @keyframes btn-celebrate-shake {
+    0%   { transform: translate(0, 0) rotate(0); }
+    20%  { transform: translate(-3px, -2px) rotate(-2deg) scale(1.04); }
+    40%  { transform: translate(3px, -2px) rotate(2deg) scale(1.06); }
+    60%  { transform: translate(-2px, 1px) rotate(-1deg) scale(1.04); }
+    80%  { transform: translate(2px, 0) rotate(1deg) scale(1.02); }
+    100% { transform: translate(0, 0) rotate(0) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .logo-celebrate svg,
+    button.sticker.is-celebrating,
+    button.sticker.is-celebrating .dust-burst-piece {
+      animation: none;
+    }
+  }
+
+  /* ===== Dollar sign burst on .dollar-cta hover / click ===== */
+  .dollar-burst-piece {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--size, 20px);
+    height: var(--size, 20px);
+    margin-left: calc(var(--size, 20px) / -2);
+    margin-top: calc(var(--size, 20px) / -2);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.3);
+    z-index: 10;
+  }
+  .dollar-burst-piece svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  a.dollar-cta:hover .dollar-burst-piece,
+  a.dollar-cta:focus-visible .dollar-burst-piece,
+  button.dollar-cta:hover .dollar-burst-piece,
+  button.dollar-cta:focus-visible .dollar-burst-piece {
+    animation: dollar-burst-fly 0.85s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) forwards;
+  }
+  a.dollar-cta.dollar-clicked .dollar-burst-piece,
+  button.dollar-cta.dollar-clicked .dollar-burst-piece {
+    animation: dollar-burst-fly 0.85s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) forwards;
+  }
+  @keyframes dollar-burst-fly {
+    0%   { opacity: 0; transform: translate(0, 0) scale(0.3) rotate(0deg); }
+    15%  { opacity: 1; }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.15) rotate(var(--rot)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dollar-burst-piece { display: none; }
+  }
+
+  /* ===== Dust-bunny burst on CTA hover ===== */
+  /* a small JS pass injects .dust-burst-piece spans into every a.sticker / button.sticker
+     (skipping work cards which have their own flip animation). */
+  .dust-burst-piece {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--size, 16px);
+    height: var(--size, 16px);
+    margin-left: calc(var(--size, 16px) / -2);
+    margin-top: calc(var(--size, 16px) / -2);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.3);
+  }
+  .dust-burst-piece svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  a.sticker:hover .dust-burst-piece,
+  a.sticker:focus-visible .dust-burst-piece,
+  button.sticker:hover .dust-burst-piece,
+  button.sticker:focus-visible .dust-burst-piece {
+    animation: dust-burst-fly 0.75s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) forwards;
+  }
+  @keyframes dust-burst-fly {
+    0% {
+      opacity: 0;
+      transform: translate(0, 0) scale(0.3) rotate(0deg);
+    }
+    20% { opacity: 1; }
+    100% {
+      opacity: 0;
+      transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--rot));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dust-burst-piece { display: none; }
+  }
+
+  /* ===== Work card flip preview ===== */
+  .work-trigger {
+    perspective: 1000px;
+  }
+  .work-trigger-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .work-trigger-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .work-trigger-back {
+    transform: rotateY(180deg);
+    background: var(--color-ink);
+    overflow: hidden;
+  }
+  .work-trigger-back img {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* image is taller than the 160px container — start at the top */
+    transform: translateY(0);
+    transition: transform 0.4s ease;
+  }
+  /* hover flips, only on hover-capable devices */
+  @media (hover: hover) and (pointer: fine) {
+    .work-card:hover .work-trigger-inner,
+    .work-card:focus-visible .work-trigger-inner {
+      transform: rotateY(180deg);
+    }
+    /* once flipped, pan the image down to reveal more of the page.
+       calc(-100% + 160px) translates the bottom of the image up to the bottom
+       of the visible window — i.e., we see the very end of the screenshot. */
+    .work-card:hover .work-trigger-back img,
+    .work-card:focus-visible .work-trigger-back img {
+      animation: work-scroll 7s ease-in-out 0.5s infinite alternate;
+    }
+  }
+  @keyframes work-scroll {
+    from { transform: translateY(0); }
+    to   { transform: translateY(calc(-100% + 160px)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .work-trigger-inner,
+    .work-trigger-back img {
+      transition: none;
+      animation: none !important;
+    }
+  }
+
+  /* ===== Process breakdown dropdown ===== */
+  .process-details {
+    transition: box-shadow 0.15s ease;
+  }
+  .process-details > summary {
+    list-style: none;
+  }
+  .process-details > summary::-webkit-details-marker {
+    display: none;
+  }
+  .process-details > summary:hover {
+    background: var(--color-mustard);
+  }
+  .process-chevron {
+    display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+  .process-details[open] > summary .process-chevron {
+    transform: rotate(180deg);
+  }
+  .process-details[open] .process-details-body {
+    animation: process-reveal 0.4s ease both;
+  }
+  .process-step-num {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-comic-red);
+    color: var(--color-cream);
+    border: 2px solid var(--color-ink);
+    font-family: var(--font-impact);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding-top: 2px;
+    box-shadow: 2px 2px 0 0 var(--color-ink);
+  }
+  @keyframes process-reveal {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .process-chevron,
+    .process-details[open] .process-details-body {
+      animation: none;
+      transition: none;
+    }
+  }
+
+  /* ===== Testimonial carousel ===== */
+  .testimonial-track {
+    /* generous min-height so swap doesn't reflow much */
+    min-height: 320px;
+    touch-action: pan-y; /* allow vertical scroll, horizontal handled by swipe */
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  @media (min-width: 640px) {
+    .testimonial-track { min-height: 280px; }
+  }
+  .testimonial-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(14px) rotate(-0.4deg) scale(0.985);
+    transition:
+      opacity 0.5s ease,
+      transform 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
+    pointer-events: none;
+  }
+  .testimonial-slide.is-active {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+    pointer-events: auto;
+  }
+  .testimonial-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-cream);
+    border: 3px solid var(--color-ink);
+    box-shadow: var(--shadow-comic-sm);
+    cursor: pointer;
+    font-family: var(--font-impact);
+    font-size: 28px;
+    line-height: 1;
+    padding-bottom: 4px; /* optical center for the chevron glyph */
+    color: var(--color-ink);
+    transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+  }
+  .testimonial-arrow:hover {
+    background: var(--color-mustard);
+    transform: translateY(-50%) translate(-2px, -2px);
+    box-shadow: var(--shadow-comic);
+  }
+  .testimonial-arrow:active {
+    transform: translateY(-50%) translate(0, 0);
+    box-shadow: var(--shadow-comic-sm);
+  }
+  .testimonial-prev { left: -22px; }
+  .testimonial-next { right: -22px; }
+  @media (max-width: 640px) {
+    .testimonial-prev { left: 4px; }
+    .testimonial-next { right: 4px; }
+  }
+
+  .testimonial-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-cream);
+    border: 2px solid var(--color-ink);
+    box-shadow: 2px 2px 0 0 var(--color-ink);
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .testimonial-dot:hover {
+    background: var(--color-mustard);
+    transform: translate(-1px, -1px);
+  }
+  .testimonial-dot.is-active {
+    background: var(--color-ink);
+    transform: scale(1.15);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial-slide {
+      transition: none;
+      transform: none;
+    }
+  }
+
+  /* ===== Scroll cameos ===== */
+  /* Corner peek-a-boo bunny: hides below the fold, hops up partway when scrolling */
+  #dust-corner {
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+  #dust-corner.is-up {
+    transform: translateY(45%);
+  }
+  .dust-corner-hop {
+    animation: corner-hop 2.4s ease-in-out infinite;
+  }
+  @keyframes corner-hop {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-7px) rotate(-2deg); }
+  }
+
+  /* Peek behind a panel: ears rise into view when the section scrolls in */
+  .dust-ears {
+    transform: translateY(42%);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.45s ease;
+  }
+  [data-dust-peek].is-peeking .dust-ears {
+    transform: translateY(-46%);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #dust-corner,
+    #dust-corner.is-up {
+      transform: translateY(100%);
+      transition: none;
+    }
+    .dust-corner-hop {
+      animation: none;
+    }
+    .dust-ears,
+    [data-dust-peek].is-peeking .dust-ears {
+      transition: none;
+      transform: translateY(42%);
+      opacity: 0;
+    }
+  }
+
+  /* ===== A) Staggered entrance animations ===== */
+  /* Panels and cards animate in with a cascade delay like comic strip panels unfolding.
+     Opt-in: add data-stagger to a parent, children get staggered reveals. */
+  [data-stagger] > * {
+    opacity: 0;
+    transform: translateY(24px) rotate(-1deg);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-stagger].stagger-in > *:nth-child(1) { transition-delay: 0s; }
+  [data-stagger].stagger-in > *:nth-child(2) { transition-delay: 0.1s; }
+  [data-stagger].stagger-in > *:nth-child(3) { transition-delay: 0.2s; }
+  [data-stagger].stagger-in > *:nth-child(4) { transition-delay: 0.3s; }
+  [data-stagger].stagger-in > *:nth-child(5) { transition-delay: 0.4s; }
+  [data-stagger].stagger-in > *:nth-child(6) { transition-delay: 0.5s; }
+  [data-stagger].stagger-in > * {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-stagger] > * {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ===== B) Parallax depth on hero ===== */
+  /* Mascot + speech bubble shift slightly on mouse move via JS custom properties */
+  .hero-parallax {
+    --px: 0;
+    --py: 0;
+  }
+  .hero-parallax .parallax-layer {
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+  }
+  .hero-parallax .parallax-mascot {
+    transform: translate(calc(var(--px) * 18px), calc(var(--py) * 12px));
+  }
+  .hero-parallax .parallax-speech {
+    transform: translate(calc(var(--px) * -10px), calc(var(--py) * -8px)) rotate(3deg);
+  }
+  .hero-parallax .parallax-glow {
+    transform: translate(calc(var(--px) * -14px), calc(var(--py) * -10px));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-parallax .parallax-layer {
+      transform: none !important;
+      transition: none;
+    }
+  }
+
+  /* (Custom cursor removed — using default browser cursors) */
+
+  /* ===== D) Scroll progress indicator ===== */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: var(--color-comic-red);
+    z-index: 9999;
+    transition: none;
+    pointer-events: none;
+    box-shadow: 0 1px 4px rgba(226, 59, 46, 0.4);
+  }
+  /* Tiny dust-bunny dot at the leading edge */
+  .scroll-progress::after {
+    content: "";
+    position: absolute;
+    right: -5px;
+    top: -3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-comic-red);
+    border: 2px solid var(--color-ink);
+    box-shadow: 1px 1px 0 var(--color-ink);
+  }
+
+  /* ===== E) Loading screen ===== */
+  .loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: var(--color-cream);
+    background-image: radial-gradient(var(--color-paper-shadow) 1px, transparent 1px);
+    background-size: 7px 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  .loading-screen.is-loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .loading-mascot {
+    width: 160px;
+    animation: loading-bounce 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) infinite alternate;
+    filter: drop-shadow(6px 6px 0 rgba(26, 23, 20, 0.25));
+  }
+  @keyframes loading-bounce {
+    0%   { transform: translateY(0) rotate(-3deg); }
+    100% { transform: translateY(-18px) rotate(3deg); }
+  }
+  .loading-bar-track {
+    width: 200px;
+    height: 12px;
+    border: 3px solid var(--color-ink);
+    background: var(--color-cream);
+    margin-top: 20px;
+    box-shadow: var(--shadow-comic-sm);
+    overflow: hidden;
+  }
+  .loading-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--color-comic-red);
+    transition: width 0.3s ease;
+  }
+  .loading-text {
+    margin-top: 12px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
+    animation: loading-text-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes loading-text-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .loading-screen { display: none !important; }
+    .loading-mascot { animation: none; }
+    .loading-text { animation: none; }
+  }
+
+  /* (Scroll snap removed — smooth scroll via html { scroll-behavior: smooth } is enough) */
+
+  /* ===== Mascot blink (used in hero and corner cameo) ===== */
+  .mascot-eye {
+    animation: mascot-blink 4s ease-in-out infinite;
+  }
+  @keyframes mascot-blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.05); }
+  }
+}

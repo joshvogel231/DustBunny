@@ -1,0 +1,267 @@
+---
+import Mascot from "./Mascot.astro";
+
+const links = [
+  { href: "/#services", label: "Services" },
+  { href: "/#work", label: "Work" },
+  { href: "/#process", label: "Process" },
+  { href: "/#about", label: "About" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/why-hire-me", label: "Why Me" },
+];
+
+// each puff: dx, dy, rotate, delay, size
+const puffs = [
+  { dx: "-22px", dy: "-18px", rot: "-30deg", delay: "0s",    size: "7px" },
+  { dx: "22px",  dy: "-20px", rot: "28deg",  delay: "0.04s", size: "8px" },
+  { dx: "-6px",  dy: "-26px", rot: "-10deg", delay: "0.08s", size: "6px" },
+  { dx: "14px",  dy: "16px",  rot: "20deg",  delay: "0.12s", size: "6px" },
+  { dx: "-18px", dy: "12px",  rot: "-18deg", delay: "0.16s", size: "5px" },
+];
+---
+
+<header class="sticky top-0 z-50 border-b-4 border-ink bg-cream/95 backdrop-blur">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+    <a href="#top" class="flex items-center gap-2">
+      <Mascot class="h-10 w-10" />
+      <span class="font-display text-lg tracking-tight sm:text-xl">THE DUST BUNNY</span>
+    </a>
+
+    <!-- desktop links -->
+    <ul class="hidden items-center gap-7 font-body font-700 uppercase tracking-wide text-sm md:flex">
+      {links.map((l) => (
+        <li>
+          <a href={l.href} class="nav-link">
+            <span class="nav-label">{l.label}</span>
+            {puffs.map((p) => (
+              <span
+                class="puff"
+                aria-hidden="true"
+                style={`--dx:${p.dx};--dy:${p.dy};--rot:${p.rot};--delay:${p.delay};--size:${p.size}`}
+              ></span>
+            ))}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- desktop CTA -->
+    <a
+      href="#contact"
+      class="sticker ink hidden bg-comic-red px-4 py-2 font-display text-sm uppercase text-cream shadow-comic-sm md:inline-block"
+    >
+      Sweep Me Up
+    </a>
+
+    <!-- mobile hamburger -->
+    <button
+      type="button"
+      id="mobile-nav-toggle"
+      class="mobile-toggle md:hidden"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-nav-sheet"
+    >
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </nav>
+
+  <!-- mobile drop sheet -->
+  <div
+    id="mobile-nav-sheet"
+    class="mobile-sheet md:hidden"
+    aria-hidden="true"
+  >
+    <ul class="flex flex-col divide-y-2 divide-ink/20">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class="mobile-link block px-5 py-4 font-display text-base uppercase"
+            data-nav-close
+          >
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a
+      href="#contact"
+      class="sticker ink mx-5 my-5 block bg-comic-red px-5 py-3 text-center font-display text-base uppercase text-cream shadow-comic-sm"
+      data-nav-close
+    >
+      Sweep Me Up
+    </a>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    const btn = document.getElementById("mobile-nav-toggle");
+    const sheet = document.getElementById("mobile-nav-sheet");
+    if (!btn || !sheet) return;
+
+    function setOpen(open) {
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      sheet.setAttribute("aria-hidden", open ? "false" : "true");
+      btn.classList.toggle("is-open", open);
+      sheet.classList.toggle("is-open", open);
+      document.body.classList.toggle("nav-locked", open);
+    }
+    btn.addEventListener("click", () => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      setOpen(!open);
+    });
+    // close on any link tap
+    sheet.querySelectorAll("[data-nav-close]").forEach((a) => {
+      a.addEventListener("click", () => setOpen(false));
+    });
+    // close on ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && btn.getAttribute("aria-expanded") === "true") {
+        setOpen(false);
+        btn.focus();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .nav-link {
+    position: relative;
+    display: inline-block;
+    padding: 4px 2px;
+    color: var(--color-ink);
+    transition: color 0.15s ease;
+  }
+  .nav-label {
+    display: inline-block;
+    transition: transform 0.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+  .nav-link:hover {
+    color: var(--color-comic-red);
+  }
+  .nav-link:hover .nav-label {
+    transform: translateY(-2px) rotate(-2deg);
+  }
+
+  .puff {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--size, 6px);
+    height: var(--size, 6px);
+    margin-left: calc(var(--size, 6px) / -2);
+    margin-top: calc(var(--size, 6px) / -2);
+    border-radius: 50%;
+    background: var(--color-dust);
+    border: 1.5px solid var(--color-ink);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.3);
+    will-change: transform, opacity;
+  }
+  .puff::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: 50%;
+    background: radial-gradient(rgba(0, 0, 0, 0.18) 0.7px, transparent 1px);
+    background-size: 3px 3px;
+  }
+  .nav-link:hover .puff,
+  .nav-link:focus-visible .puff {
+    animation: puff-fly 0.65s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) forwards;
+  }
+  @keyframes puff-fly {
+    0%   { opacity: 0; transform: translate(0, 0) scale(0.3) rotate(0deg); }
+    25%  { opacity: 1; transform: translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3)) scale(1) rotate(calc(var(--rot) * 0.4)); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.1) rotate(var(--rot)); }
+  }
+
+  /* ===== mobile hamburger ===== */
+  .mobile-toggle {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    border: 3px solid var(--color-ink);
+    background: var(--color-cream);
+    box-shadow: var(--shadow-comic-sm);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.12s ease;
+  }
+  @media (max-width: 767.98px) {
+    .mobile-toggle {
+      display: inline-flex;
+    }
+  }
+  .mobile-toggle .bar {
+    display: block;
+    width: 20px;
+    height: 3px;
+    background: var(--color-ink);
+    border-radius: 1px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+  .mobile-toggle:hover { background: var(--color-mustard); }
+  .mobile-toggle.is-open .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .mobile-toggle.is-open .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-toggle.is-open .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* ===== mobile drop sheet ===== */
+  .mobile-sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--color-cream);
+    border-bottom: 4px solid var(--color-ink);
+    box-shadow: var(--shadow-comic);
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.2s ease;
+  }
+  .mobile-sheet.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mobile-link {
+    color: var(--color-ink);
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+  .mobile-link:hover,
+  .mobile-link:focus {
+    background: var(--color-mustard);
+    color: var(--color-ink);
+  }
+
+  :global(body.nav-locked) {
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-sheet,
+    .mobile-toggle,
+    .mobile-toggle .bar,
+    .nav-label,
+    .puff {
+      transition: none;
+      animation: none;
+    }
+  }
+</style>

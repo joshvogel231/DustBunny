@@ -1,0 +1,62 @@
+---
+import Mascot from "./Mascot.astro";
+---
+
+<footer class="halftone-ink border-t-4 border-ink">
+  <div class="mx-auto max-w-6xl px-5 py-12 text-cream">
+    <!-- Top row: logo + nav columns -->
+    <div class="grid gap-10 sm:grid-cols-[1fr_auto_auto] sm:gap-12">
+      <!-- Brand column -->
+      <div>
+        <a href="/#top" class="inline-flex items-center gap-2" data-no-sweep>
+          <Mascot class="h-10 w-10" />
+          <span class="font-display text-lg">THE DUST BUNNY</span>
+        </a>
+        <p class="mt-3 max-w-xs font-body text-sm leading-relaxed text-cream/70">
+          Custom websites for service-based small businesses. SEO + AI SEO baked in.
+          Don't get left in the dust.
+        </p>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <h4 class="font-display text-xs uppercase tracking-widest text-mustard">Navigate</h4>
+        <ul class="mt-3 space-y-2 font-body text-sm">
+          <li><a href="/#services" class="text-cream/80 transition-colors hover:text-mustard">Services</a></li>
+          <li><a href="/#work" class="text-cream/80 transition-colors hover:text-mustard">Work</a></li>
+          <li><a href="/#process" class="text-cream/80 transition-colors hover:text-mustard">Process</a></li>
+          <li><a href="/about" class="text-cream/80 transition-colors hover:text-mustard">About</a></li>
+          <li><a href="/faq" class="text-cream/80 transition-colors hover:text-mustard">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Get in touch -->
+      <div>
+        <h4 class="font-display text-xs uppercase tracking-widest text-mustard">Get in touch</h4>
+        <ul class="mt-3 space-y-2 font-body text-sm">
+          <li><a href="/#contact" class="text-cream/80 transition-colors hover:text-mustard">Contact Form</a></li>
+          <li><a href="mailto:joshvogel231@gmail.com" class="text-cream/80 transition-colors hover:text-mustard">Email Josh</a></li>
+        </ul>
+        <a
+          href="/#contact"
+          class="sticker ink mt-5 inline-block bg-comic-red px-5 py-2 font-display text-xs uppercase text-cream shadow-comic-sm"
+        >
+          Sweep Me Up
+        </a>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="my-8 border-t border-cream/20"></div>
+
+    <!-- Bottom row: copyright + tagline -->
+    <div class="flex flex-col items-center justify-between gap-3 sm:flex-row">
+      <p class="font-body text-xs text-cream/50">
+        &copy; {new Date().getFullYear()} The Dust Bunny. All rights reserved.
+      </p>
+      <p class="font-body text-xs text-cream/40 italic">
+        Built by the bunny himself.
+      </p>
+    </div>
+  </div>
+</footer>

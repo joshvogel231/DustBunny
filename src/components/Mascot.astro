@@ -1,0 +1,195 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+// Deterministic RNG so the silhouette is stable across builds
+function mulberry32(seed: number) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const TAU = Math.PI * 2;
+
+// Build a spiky, hairy closed silhouette around a center.
+function furBlob(
+  cx: number,
+  cy: number,
+  rxO: number,
+  ryO: number,
+  rxI: number,
+  ryI: number,
+  spikes: number,
+  rand: () => number,
+) {
+  let d = "";
+  const ticks: string[] = [];
+  for (let i = 0; i < spikes; i++) {
+    const t = i / spikes;
+    const aO = TAU * t + (rand() - 0.5) * 0.08;
+    const aI = TAU * (t + 0.5 / spikes) + (rand() - 0.5) * 0.08;
+    const fo = 0.82 + rand() * 0.34; // spike length variation
+    const fi = 0.9 + rand() * 0.12; // valley depth variation
+    const ox = cx + Math.cos(aO) * rxO * fo;
+    const oy = cy + Math.sin(aO) * ryO * fo;
+    const ix = cx + Math.cos(aI) * rxI * fi;
+    const iy = cy + Math.sin(aI) * ryI * fi;
+    d += i === 0 ? `M${ox.toFixed(1)} ${oy.toFixed(1)}` : `L${ox.toFixed(1)} ${oy.toFixed(1)}`;
+    d += `L${ix.toFixed(1)} ${iy.toFixed(1)}`;
+    // a few inner fur strokes for hand-drawn texture
+    if (i % 3 === 0) {
+      const sx = cx + Math.cos(aO) * rxO * (fo - 0.34);
+      const sy = cy + Math.sin(aO) * ryO * (fo - 0.34);
+      ticks.push(`M${sx.toFixed(1)} ${sy.toFixed(1)}L${ox.toFixed(1)} ${oy.toFixed(1)}`);
+    }
+  }
+  return { d: d + "Z", ticks };
+}
+
+const rand = mulberry32(7);
+const body = furBlob(130, 152, 102, 92, 82, 74, 32, rand);
+
+// little floating dust puffs (each drifts on its own gentle loop)
+const motes = [
+  { cx: 34, cy: 100, s: 1, dx: "-9px", dy: "-16px", rot: "-12deg", dur: "6.5s", delay: "0s" },
+  { cx: 234, cy: 66, s: 0.8, dx: "11px", dy: "-13px", rot: "14deg", dur: "7.8s", delay: "-2.6s" },
+  { cx: 228, cy: 216, s: 1.1, dx: "12px", dy: "14px", rot: "10deg", dur: "8.6s", delay: "-1.4s" },
+  { cx: 58, cy: -6, s: 0.7, dx: "-7px", dy: "-15px", rot: "-14deg", dur: "9.2s", delay: "-3.5s" },
+  { cx: 46, cy: 232, s: 0.85, dx: "-10px", dy: "13px", rot: "-9deg", dur: "7.2s", delay: "-0.8s" },
+].map((m) => ({
+  ...m,
+  d: furBlob(m.cx, m.cy, 16 * m.s, 14 * m.s, 11 * m.s, 10 * m.s, 11, rand).d,
+}));
+---
+
+<!-- The Dust Bunny: a fuzzy, spiky dust ball with long bunny ears -->
+<svg
+  class={className}
+  viewBox="0 -44 260 320"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label="The Dust Bunny mascot"
+>
+  <defs>
+    <pattern id="fuzz" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.1" fill="rgba(0,0,0,0.10)" />
+    </pattern>
+  </defs>
+
+  <!-- ground shadow -->
+  <ellipse cx="130" cy="250" rx="80" ry="13" fill="#1a1714" opacity="0.16" />
+
+  <!-- ===== long bunny ears (behind the body) ===== -->
+  <!-- left ear: long, leaning slightly left -->
+  <path
+    d="M118 96 C 106 56, 96 2, 100 -26 C 103 -42, 120 -40, 124 -10 C 127 30, 128 70, 128 96 Z"
+    fill="#c9b79c" stroke="#1a1714" stroke-width="6" stroke-linejoin="round"
+  />
+  <path
+    d="M118 96 C 106 56, 96 2, 100 -26 C 103 -42, 120 -40, 124 -10 C 127 30, 128 70, 128 96 Z"
+    fill="url(#fuzz)" stroke="none"
+  />
+  <path
+    d="M119 88 C 110 54, 102 4, 106 -19 C 109 -33, 120 -31, 122 -8 C 124 28, 124 64, 124 88 Z"
+    fill="#e0a89f" stroke="none"
+  />
+  <!-- right ear: long, with the tip flopping over to the right -->
+  <path
+    d="M140 96 C 134 58, 128 4, 136 -22 C 141 -40, 159 -42, 168 -25 C 177 -9, 171 13, 152 13 C 160 44, 158 72, 152 96 Z"
+    fill="#c9b79c" stroke="#1a1714" stroke-width="6" stroke-linejoin="round"
+  />
+  <path
+    d="M140 96 C 134 58, 128 4, 136 -22 C 141 -40, 159 -42, 168 -25 C 177 -9, 171 13, 152 13 C 160 44, 158 72, 152 96 Z"
+    fill="url(#fuzz)" stroke="none"
+  />
+  <path
+    d="M141 88 C 136 56, 131 6, 138 -16 C 143 -32, 158 -33, 165 -20 C 172 -8, 167 10, 151 11 C 158 40, 155 68, 151 88 Z"
+    fill="#e0a89f" stroke="none"
+  />
+
+  <!-- little feet (behind body, peeking out the bottom) -->
+  <ellipse cx="104" cy="244" rx="17" ry="11" fill="#c9b79c" stroke="#1a1714" stroke-width="6" />
+  <ellipse cx="156" cy="244" rx="17" ry="11" fill="#c9b79c" stroke="#1a1714" stroke-width="6" />
+
+  <!-- ===== fuzzy spiky body ===== -->
+  <path d={body.d} fill="#c9b79c" stroke="#1a1714" stroke-width="6" stroke-linejoin="round" />
+  <path d={body.d} fill="url(#fuzz)" stroke="none" />
+
+  <!-- soft belly highlight -->
+  <ellipse cx="128" cy="170" rx="56" ry="46" fill="#e0d3b6" opacity="0.55" />
+
+  <!-- faint inner fur strokes -->
+  {body.ticks.map((t) => (
+    <path d={t} stroke="#1a1714" stroke-width="2" fill="none" opacity="0.18" stroke-linecap="round" />
+  ))}
+
+  <!-- big cute eyes (groups blink together) -->
+  <g class="mascot-eye" style="transform-origin: 106px 150px;">
+    <circle cx="106" cy="150" r="19" fill="#1a1714" />
+    <circle cx="113" cy="143" r="6" fill="#f4ead2" />
+    <circle cx="101" cy="156" r="2.6" fill="#f4ead2" opacity="0.85" />
+  </g>
+  <g class="mascot-eye" style="transform-origin: 154px 150px;">
+    <circle cx="154" cy="150" r="19" fill="#1a1714" />
+    <circle cx="161" cy="143" r="6" fill="#f4ead2" />
+    <circle cx="149" cy="156" r="2.6" fill="#f4ead2" opacity="0.85" />
+  </g>
+
+  <!-- rosy cheeks -->
+  <ellipse cx="80" cy="174" rx="13" ry="9" fill="#e0584c" opacity="0.3" />
+  <ellipse cx="180" cy="174" rx="13" ry="9" fill="#e0584c" opacity="0.3" />
+
+  <!-- tiny nose + soft smile -->
+  <path d="M124 170 q6 6 12 0 q-6 6 -12 0 Z" fill="#e0584c" stroke="#1a1714" stroke-width="2.5" stroke-linejoin="round" />
+  <path d="M114 180 q16 14 32 0" stroke="#1a1714" stroke-width="4" fill="none" stroke-linecap="round" />
+
+  <!-- floating dust puffs -->
+  {motes.map((m) => (
+    <path
+      class="mote"
+      d={m.d}
+      fill="#c9b79c"
+      stroke="#1a1714"
+      stroke-width="3"
+      stroke-linejoin="round"
+      opacity="0.55"
+      style={`--dx:${m.dx};--dy:${m.dy};--rot:${m.rot};--dur:${m.dur};--delay:${m.delay}`}
+    />
+  ))}
+</svg>
+
+<style>
+  .mote {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: dust-drift var(--dur, 7s) ease-in-out var(--delay, 0s) infinite alternate;
+    will-change: transform;
+  }
+  @keyframes dust-drift {
+    from {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    to {
+      transform: translate(var(--dx, 3px), var(--dy, -6px)) rotate(var(--rot, 6deg));
+    }
+  }
+  /* Slow, natural blink every ~6 seconds */
+  .mascot-eye {
+    animation: mascot-blink 6s infinite;
+  }
+  @keyframes mascot-blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mote, .mascot-eye {
+      animation: none;
+    }
+  }
+</style>

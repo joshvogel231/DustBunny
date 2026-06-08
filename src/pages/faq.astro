@@ -1,0 +1,262 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+// Edit / reorder / add to this list freely.
+// Each item renders as an expandable comic panel.
+const faqs = [
+  {
+    q: "Who's NOT a good fit?",
+    a: `If you're looking to launch a Shopify store and sell physical products
+        online, this isn't the right fit. The Dust Bunny is built for
+        <strong>service-based businesses</strong> — landscapers, contractors,
+        fishing guides, local trades, professionals, salons, studios. The kind
+        of work where customers need to <em>find you, trust you, and call you</em>.
+        We build digital footprints, brands, and traffic engines — not
+        e-commerce funnels.`,
+  },
+  {
+    q: "What if my industry is super niche?",
+    a: `Even better. The more specific your trade, the less competition you have
+        online — niche businesses often punch way above their weight in search
+        once they actually have a real site. So far I've built for landscapers,
+        pipeline contractors operating across 28 states, charter fishing guides,
+        and site-prep/demolition crews. If you can explain what you do and who
+        buys it, we can build a site that finds them. Don't worry about being
+        too weird, too small, or too specific — that's usually the advantage.`,
+  },
+  {
+    q: "How much does a site cost?",
+    a: `Builds are <strong>$1,000</strong> for site design and light branding.
+        That's a fully custom, SEO-ready, AI-SEO-ready site — not a template.
+        You're getting the kind of work agencies charge <strong>$8–10k</strong> for.
+        Heads up: <strong>no work begins until the build is paid for</strong>
+        (or your first Klarna installment goes through). Keeps things clean on
+        both ends.`,
+  },
+  {
+    q: "Do you offer payment plans?",
+    a: `Yes — we accept <strong>Klarna</strong>, so you can split your build
+        into easy installments instead of paying upfront in full. And remember:
+        a business website is a fully <strong>deductible business expense</strong>.
+        Talk to your accountant, but odds are you're writing it off.`,
+  },
+  {
+    q: "Do you accept anything besides money?",
+    a: `Heh — actually, yes. I'll happily barter services for
+        <strong>unopened collectable whiskeys</strong> or
+        <strong>firearms</strong>. Firearms need to ship to a nearby
+        <strong>FFL dealer</strong> before the project kicks off — the build
+        doesn't start until the bottle's in hand or the transfer is cleared and
+        ready for pickup. Reach out if you want to talk valuation.`,
+  },
+  {
+    q: "How long does it take?",
+    a: `From the kickoff call, expect <strong>3–5 days</strong> for the first
+        cut. If you've got your info, photos, and feedback ready to go and
+        communication stays tight, I can turn a site around in as little as
+        <strong>24 hours</strong>. The full project including questionnaire,
+        mood board, and revisions usually runs 1–2 weeks — the timeline really
+        just tracks how fast you can move. Good communication = fast site.`,
+  },
+  {
+    q: "What's actually included in a build?",
+    a: `Custom design from scratch (no recycled templates), responsive layout
+        that works on every device, technical SEO baked in from line one, AI SEO
+        so assistants like ChatGPT and Google's AI can recommend you, a working
+        contact form, Google Business Profile setup help, and deployment to a
+        modern host. One free revision round is included.`,
+  },
+  {
+    q: "What's 'AI SEO' and is it really included?",
+    a: `It's structuring your site so AI assistants (ChatGPT, Gemini, Google AI
+        Overviews, Perplexity) can confidently cite you when people ask them
+        for recommendations in your industry. Yes, it's included on every
+        build. As more searches move to AI assistants, this is increasingly
+        where customers find businesses.`,
+  },
+  {
+    q: "Do you handle photos and content?",
+    a: `Stock photography works for plenty of builds and we can absolutely
+        launch with it. But if you're chasing a real <strong>luxury-brand feel</strong>,
+        your own photos and videos are the single biggest upgrade you can make.
+        We can ship with stock and swap in custom shots later, or you can
+        supply your own from day one and the site will look the part
+        immediately.`,
+  },
+  {
+    q: "What about hosting fees?",
+    a: `Hosting and domain costs are separate — you pay those directly to the
+        provider (e.g. GoDaddy for the domain, Netlify or similar for hosting).
+        That's intentional: you own and control everything from day one. No
+        monthly fee to me, no lock-in. Total third-party cost is typically
+        <strong>$15–$25/year</strong> for a basic domain and free-to-cheap for
+        hosting depending on traffic.
+        Heads up: the exact domain you want might already be taken, or be a
+        premium name with a higher price tag. Do a little research before
+        falling in love with a specific URL — and have a backup or two ready.`,
+  },
+  {
+    q: "Can you help me register a domain?",
+    a: `Yes — I'll help you pick something memorable and walk you through the
+        registration. But you'll buy it on your own card so the domain stays
+        in <strong>your name and under your control</strong> from day one. Same
+        goes for the hosting account. You own it all.`,
+  },
+  {
+    q: "I already have a site I hate. Can you replace it?",
+    a: `That's literally the pitch. About half of the businesses I work with
+        come in with an existing site that's outdated, slow, or just doesn't
+        represent the work. We rebuild it cleanly and you keep your existing
+        domain — no lost traffic, no broken links.`,
+  },
+  {
+    q: "Do I own the site after?",
+    a: `Yes. Everything I build is yours — the code, the design, the domain,
+        the hosting account. No lock-in, no monthly platform fee, no "if you
+        leave we delete your site." If you ever want to take it to another
+        developer, you can.`,
+  },
+  {
+    q: "How do revisions work?",
+    a: `Every project includes <strong>one free revision round</strong> after
+        the first cut to dial in anything that isn't quite right. Additional
+        revisions are <strong>$250 each</strong> — you only pay for the changes
+        you actually want.`,
+  },
+  {
+    q: "Do you offer ongoing maintenance after launch?",
+    a: `Yep — and you've got options.
+        <strong>Small changes</strong> (quick copy swaps, image updates, minor
+        tweaks — roughly 20 minutes of work per month) stay
+        <strong>on the house</strong>.
+        Bigger one-off edits are billed at <strong>$250/hour</strong>.
+        Or grab a <strong>retainer package</strong> between
+        <strong>$100–$500/month</strong> for predictable ongoing support —
+        scope varies based on what you actually need, so
+        <a href="/#contact" class="font-700 text-comic-red underline underline-offset-2">reach out</a>
+        and we'll narrow it down together. No mandatory retainer, no surprise
+        invoices.`,
+  },
+  {
+    q: "What if I need to add an online store later?",
+    a: `If you outgrow service-based work and want to start selling products
+        online, you've got solid options. <strong>Shopify</strong> is
+        purpose-built for e-commerce and will outperform a bolted-on shop for
+        most use cases. If you want it to feel like a real brand from day one,
+        my wife runs a graphic design business and partners with Shopify pros
+        to build polished branded stores — happy to introduce you. Either way,
+        your existing Dust Bunny site keeps doing its job: building your
+        footprint and driving the traffic.`,
+  },
+  {
+    q: "What about logos and branding?",
+    a: `Some brand and logo work is fine. If you come in with an ugly logo,
+        I'd rather make it awesome — your brand is too great to get passed up
+        because of lame branding. If you're starting from scratch and need a
+        full identity, talk to us — we can work something out. (My wife runs a
+        graphic design business and is wickedly talented at this kind of work.)`,
+  },
+];
+---
+
+<Layout
+  title="FAQ — The Dust Bunny"
+  description="Common questions about The Dust Bunny — pricing, timelines, what's included, who's a good fit, and what's not. Affordable custom websites for service-based small businesses."
+>
+  <span id="top"></span>
+  <Nav />
+
+  <main id="main">
+    <!-- ===================== HERO ===================== -->
+    <section class="action-lines relative overflow-hidden border-b-4 border-ink">
+      <div class="mx-auto max-w-3xl px-5 py-16 md:py-20">
+        <a
+          href="/#top"
+          class="font-body text-sm font-700 uppercase tracking-wide text-comic-red hover:text-comic-red-dark"
+        >
+          ← Back to the homepage
+        </a>
+
+        <div class="ink-2 mt-8 inline-block -rotate-2 bg-mustard px-3 py-1 font-body text-sm font-800 uppercase tracking-wide shadow-comic-sm">
+          Questions, asked & answered
+        </div>
+
+        <h1 class="mt-4 font-impact text-5xl uppercase leading-[1.05] sm:text-6xl">
+          The <span class="ink-2 inline-block -rotate-1 bg-comic-red px-3 pb-2 pt-1 leading-none text-cream shadow-comic-sm">FAQ</span>.
+        </h1>
+
+        <p class="mt-6 font-body text-lg leading-relaxed text-ink/85">
+          Real questions, real answers. If your question isn't here, hit the
+          contact form and ask — I'll answer personally.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ LIST ===================== -->
+    <section class="mx-auto max-w-3xl px-5 py-16">
+      <div class="space-y-4">
+        {faqs.map((item, i) => (
+          <details class={`faq-item ink bg-cream shadow-comic ${i === 0 ? "" : ""}`}>
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 font-display text-base uppercase">
+              <span>{item.q}</span>
+              <span class="faq-chevron font-impact text-2xl leading-none" aria-hidden="true">▾</span>
+            </summary>
+            <div class="faq-body border-t-4 border-ink px-6 py-6 sm:px-8 sm:py-7">
+              <p class="font-body leading-relaxed text-ink/85" set:html={item.a}></p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- ===================== STILL HAVE QUESTIONS ===================== -->
+    <section class="border-y-4 border-ink halftone-mustard">
+      <div class="mx-auto max-w-3xl px-5 py-16 text-center">
+        <h2 class="font-impact text-3xl uppercase sm:text-4xl">Still wondering?</h2>
+        <p class="mt-3 font-body text-ink/85">
+          Hit the form. I'll respond personally — usually within a day.
+        </p>
+        <a
+          href="/#contact"
+          class="sticker ink mt-7 inline-block bg-comic-red px-7 py-3 font-display text-base uppercase text-cream shadow-comic"
+        >
+          Clean My Site's Dust Bunnies →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <Footer />
+
+  <style>
+    .faq-item > summary {
+      list-style: none;
+      transition: background 0.12s ease;
+    }
+    .faq-item > summary::-webkit-details-marker { display: none; }
+    .faq-item > summary:hover {
+      background: var(--color-mustard);
+    }
+    .faq-chevron {
+      display: inline-block;
+      transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .faq-item[open] > summary .faq-chevron {
+      transform: rotate(180deg);
+    }
+    .faq-item[open] .faq-body {
+      animation: faq-reveal 0.35s ease both;
+    }
+    @keyframes faq-reveal {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .faq-chevron,
+      .faq-item[open] .faq-body { animation: none; transition: none; }
+    }
+  </style>
+</Layout>

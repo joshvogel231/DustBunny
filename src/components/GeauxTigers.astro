@@ -1,0 +1,32 @@
+---
+// Reusable "Geaux Tigers" easter egg.
+// Hover (or focus) the bold text → Mardi Gras confetti fans out.
+// Style classes (.geaux / .confetti / @keyframes geaux-confetti) live wherever this is used.
+// Default rendered text is "Geaux Tigers" but you can pass children via a slot:
+//   <GeauxTigers>GEAUX TIGERS</GeauxTigers>
+
+const confettiPieces = [
+  { c: "#5c1d8e", dx: "-34px", dy: "-26px", rot: "90deg",   delay: "0s"    },
+  { c: "#ffd700", dx: "30px",  dy: "-30px", rot: "-110deg", delay: "0.05s" },
+  { c: "#009444", dx: "-20px", dy: "-36px", rot: "60deg",   delay: "0.10s" },
+  { c: "#5c1d8e", dx: "22px",  dy: "-12px", rot: "-50deg",  delay: "0.15s" },
+  { c: "#ffd700", dx: "-30px", dy: "10px",  rot: "120deg",  delay: "0.20s" },
+  { c: "#009444", dx: "34px",  dy: "16px",  rot: "-80deg",  delay: "0.25s" },
+  { c: "#5c1d8e", dx: "-10px", dy: "24px",  rot: "180deg",  delay: "0.30s" },
+  { c: "#ffd700", dx: "14px",  dy: "-22px", rot: "-160deg", delay: "0.35s" },
+  { c: "#009444", dx: "-26px", dy: "-8px",  rot: "70deg",   delay: "0.40s" },
+];
+
+const hasSlot = Astro.slots.has("default");
+---
+
+<span class="geaux" tabindex="0">
+  <strong>{hasSlot ? <slot /> : "Geaux Tigers"}</strong>
+  {confettiPieces.map((cp) => (
+    <span
+      class="confetti"
+      aria-hidden="true"
+      style={`--c:${cp.c};--dx:${cp.dx};--dy:${cp.dy};--rot:${cp.rot};--delay:${cp.delay}`}
+    ></span>
+  ))}
+</span>

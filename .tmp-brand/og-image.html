@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bungee&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --cream:#f4ead2; --ink:#1a1714; --red:#e23b2e; --mustard:#f2b93b; --teal:#2a9d9b; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    width: 1200px; height: 630px;
+    background-color: var(--cream);
+    background-image:
+      /* halftone texture */
+      radial-gradient(rgba(0,0,0,0.06) 1.5px, transparent 1.6px),
+      /* sunburst behind the mascot */
+      conic-gradient(from 0deg at 78% 50%,
+        rgba(226,59,46,0.06) 0deg 8deg, transparent 8deg 16deg,
+        rgba(226,59,46,0.06) 16deg 24deg, transparent 24deg 32deg,
+        rgba(226,59,46,0.06) 32deg 40deg, transparent 40deg 48deg,
+        rgba(226,59,46,0.06) 48deg 56deg, transparent 56deg 64deg,
+        rgba(226,59,46,0.06) 64deg 72deg, transparent 72deg 80deg,
+        rgba(226,59,46,0.06) 80deg 88deg, transparent 88deg 96deg,
+        rgba(226,59,46,0.06) 96deg 104deg, transparent 104deg 112deg,
+        rgba(226,59,46,0.06) 112deg 120deg, transparent 120deg 128deg,
+        rgba(226,59,46,0.06) 128deg 136deg, transparent 136deg 144deg,
+        rgba(226,59,46,0.06) 144deg 152deg, transparent 152deg 160deg,
+        rgba(226,59,46,0.06) 160deg 168deg, transparent 168deg 176deg,
+        rgba(226,59,46,0.06) 176deg 184deg, transparent 184deg 192deg,
+        rgba(226,59,46,0.06) 192deg 200deg, transparent 200deg 208deg,
+        rgba(226,59,46,0.06) 208deg 216deg, transparent 216deg 224deg,
+        rgba(226,59,46,0.06) 224deg 232deg, transparent 232deg 240deg,
+        rgba(226,59,46,0.06) 240deg 248deg, transparent 248deg 256deg,
+        rgba(226,59,46,0.06) 256deg 264deg, transparent 264deg 272deg,
+        rgba(226,59,46,0.06) 272deg 280deg, transparent 280deg 288deg,
+        rgba(226,59,46,0.06) 288deg 296deg, transparent 296deg 304deg,
+        rgba(226,59,46,0.06) 304deg 312deg, transparent 312deg 320deg,
+        rgba(226,59,46,0.06) 320deg 328deg, transparent 328deg 336deg,
+        rgba(226,59,46,0.06) 336deg 344deg, transparent 344deg 352deg,
+        rgba(226,59,46,0.06) 352deg 360deg
+      );
+    background-size: 12px 12px, 100% 100%;
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex; align-items: center;
+    padding: 0 70px;
+    gap: 30px;
+    overflow: hidden;
+    position: relative;
+    border: 12px solid var(--ink);
+  }
+  .left { flex: 1; }
+  .badge {
+    display: inline-block;
+    background: var(--mustard);
+    border: 3px solid var(--ink);
+    box-shadow: 4px 4px 0 0 var(--ink);
+    padding: 8px 14px;
+    font-weight: 800;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transform: rotate(-2deg);
+  }
+  h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 130px;
+    line-height: 0.92;
+    margin: 26px 0 0;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+  }
+  .dust {
+    background: var(--red);
+    color: var(--cream);
+    border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 0 var(--ink);
+    padding: 4px 14px 12px;
+    display: inline-block;
+    transform: rotate(-1deg);
+    margin-top: 8px;
+    line-height: 0.85;
+  }
+  .meta {
+    margin-top: 30px;
+    font-family: 'Bungee', sans-serif;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .right { width: 470px; height: 470px; flex-shrink: 0; }
+  .right svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(8px 8px 0 rgba(26,23,20,0.18)); }
+</style>
+</head>
+<body>
+  <div class="left">
+    <span class="badge">Bad site? No site? Same problem.</span>
+    <h1>Don't get<br>left in the<br><span class="dust">dust.</span></h1>
+    <div class="meta">THE DUST BUNNY · the-dustbunny.com</div>
+  </div>
+  <div class="right">
+    __MASCOT__
+  </div>
+</body>
+</html>

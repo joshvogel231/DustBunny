@@ -1,0 +1,635 @@
+---
+import "../styles/global.css";
+import Mascot from "../components/Mascot.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "The Dust Bunny — Don't Get Left in the Dust",
+  description = "The Dust Bunny builds websites for small businesses with no site — or a site they hate. SEO + AI SEO baked in to grow your digital footprint and drive real traffic. Don't get left in the digital dust.",
+} = Astro.props;
+
+const SITE_URL = "https://the-dustbunny.com";
+const canonical = new URL(Astro.url.pathname, SITE_URL).toString();
+const ogImage = SITE_URL + "/og.jpg";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "The Dust Bunny",
+  "alternateName": "The Dust Bunny — Digital Solutions",
+  "description":
+    "Custom websites for service-based small businesses. SEO + AI SEO baked in. Affordable digital footprints that actually drive traffic.",
+  "url": SITE_URL,
+  "image": ogImage,
+  "logo": ogImage,
+  "priceRange": "$$",
+  "areaServed": { "@type": "Country", "name": "United States" },
+  "founder": { "@type": "Person", "name": "Josh Vogel" },
+  "slogan": "Don't get left in the dust.",
+  "knowsAbout": [
+    "Web development",
+    "Web design",
+    "Search engine optimization",
+    "AI search optimization",
+    "Small business websites",
+    "Local SEO",
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Bungee&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph (Facebook, LinkedIn, Slack, iMessage, etc.) -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Dust Bunny — Don't get left in the digital dust" />
+    <meta property="og:site_name" content="The Dust Bunny" />
+
+    <!-- Twitter / X large card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Theme color matches the comic-red highlight in the hero -->
+    <meta name="theme-color" content="#e23b2e" />
+
+    <!-- LocalBusiness / ProfessionalService structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Sets html.js before paint so CSS can hide typewriter text and avoid a flash before JS runs -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+  <body>
+    <!-- Loading screen (first visit only) -->
+    <div class="loading-screen" id="loading-screen" aria-hidden="true">
+      <div class="loading-mascot"><Mascot /></div>
+      <div class="loading-bar-track"><div class="loading-bar-fill" id="loading-bar"></div></div>
+      <div class="loading-text">Sweeping up...</div>
+    </div>
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <a href="#main" class="skip-link">Skip to content</a>
+    <slot />
+
+    <!-- "Currently building" status widget (bottom-left floating chip) -->
+    <div class="status-widget" aria-label="Booking status">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span class="status-text">Booking July builds · 2 spots left</span>
+    </div>
+
+    <!-- Mascot-shaped back-to-top button -->
+    <button
+      id="back-to-top"
+      class="btt"
+      aria-label="Back to top"
+      hidden
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 4l-7 7h4v7h6v-7h4z" fill="currentColor"/>
+      </svg>
+    </button>
+
+    <!-- Hop-Across Sweep page transition overlay (mascot crosses screen + dust covers) -->
+    <div class="sweep-overlay" aria-hidden="true">
+      <div class="sweep-dust"></div>
+      <div class="sweep-mascot">
+        <Mascot />
+      </div>
+    </div>
+
+
+
+    <!-- corner peek-a-boo cameo -->
+    <div
+      id="dust-corner"
+      aria-hidden="true"
+      class="pointer-events-none fixed bottom-0 right-3 z-40 w-20 sm:right-8 sm:w-24"
+    >
+      <div class="dust-corner-hop">
+        <Mascot />
+      </div>
+    </div>
+
+    <script is:inline>
+      (function () {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        // Corner bunny: hop up once you've scrolled past the hero, duck near the footer.
+        const corner = document.getElementById("dust-corner");
+        if (corner && !reduce.matches) {
+          let ticking = false;
+          const update = () => {
+            ticking = false;
+            const y = window.scrollY;
+            const doc = document.documentElement;
+            const nearBottom =
+              y + window.innerHeight >= doc.scrollHeight - 220;
+            const pastHero = y > window.innerHeight * 0.6;
+            corner.classList.toggle("is-up", pastHero && !nearBottom);
+          };
+          window.addEventListener(
+            "scroll",
+            () => {
+              if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(update);
+              }
+            },
+            { passive: true },
+          );
+          update();
+        }
+
+        // Ears peeking from behind tagged sections.
+        const peeks = document.querySelectorAll("[data-dust-peek]");
+        if (peeks.length && !reduce.matches && "IntersectionObserver" in window) {
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((e) => {
+                e.target.classList.toggle("is-peeking", e.isIntersecting);
+              });
+            },
+            { threshold: 0.35 },
+          );
+          peeks.forEach((p) => io.observe(p));
+        }
+      })();
+    </script>
+
+    <!-- Hop-Across Sweep transition: mascot hops across screen, dust covers, navigate -->
+    <script is:inline>
+      (function () {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // ENTRY: if we just arrived via a sweep transition, play the dust-clear animation
+        try {
+          if (sessionStorage.getItem("sweep-entry") === "1") {
+            sessionStorage.removeItem("sweep-entry");
+            if (!reduce) {
+              document.documentElement.classList.add("sweep-in");
+              setTimeout(() => {
+                document.documentElement.classList.remove("sweep-in");
+              }, 900);
+            }
+          }
+        } catch (_) {}
+
+        if (reduce) return;
+
+        // Delegated click handler — intercept any <a> that navigates to another page
+        document.addEventListener("click", (e) => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+          if (e.defaultPrevented) return;
+          const link = e.target.closest("a");
+          if (!link) return;
+          if (link.target === "_blank" || link.hasAttribute("download")) return;
+          if (link.dataset.noSweep !== undefined) return; // opt-out
+
+          const href = link.getAttribute("href");
+          if (!href) return;
+          if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return;
+
+          let url;
+          try { url = new URL(href, location.href); } catch (_) { return; }
+          if (url.origin !== location.origin) return;
+          if (url.pathname === location.pathname) return;
+
+          e.preventDefault();
+
+          document.documentElement.classList.add("sweep-out");
+          try { sessionStorage.setItem("sweep-entry", "1"); } catch (_) {}
+          // navigate when dust has fully covered (mascot sweeps across — 1.6s total)
+          setTimeout(() => {
+            window.location.href = url.href;
+          }, 1600);
+        });
+      })();
+    </script>
+
+    <!-- Back-to-top button: appears after scrolling past first viewport, smooth-scrolls home -->
+    <script is:inline>
+      (function () {
+        const btn = document.getElementById("back-to-top");
+        if (!btn) return;
+        let ticking = false;
+        function update() {
+          ticking = false;
+          if (window.scrollY > window.innerHeight * 0.8) btn.hidden = false;
+          else btn.hidden = true;
+        }
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              ticking = true;
+              requestAnimationFrame(update);
+            }
+          },
+          { passive: true },
+        );
+        update();
+        btn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      })();
+    </script>
+
+    <!-- Generic section reveal: opt-in by adding data-reveal to any element -->
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (!("IntersectionObserver" in window)) return;
+        const els = document.querySelectorAll("[data-reveal]");
+        if (!els.length) return;
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-revealed");
+                obs.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.15 },
+        );
+        els.forEach((el) => io.observe(el));
+      })();
+    </script>
+
+    <!-- Letter-by-letter heading reveal: opt-in with data-reveal-letters -->
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (!("IntersectionObserver" in window)) return;
+        document.querySelectorAll("[data-reveal-letters]").forEach((el) => {
+          const text = el.textContent || "";
+          el.textContent = "";
+          el.setAttribute("aria-label", text);
+          // wrap each character in a span for staggered animation
+          [...text].forEach((ch, i) => {
+            const s = document.createElement("span");
+            s.textContent = ch === " " ? " " : ch;
+            s.className = "letter";
+            s.style.transitionDelay = (i * 18) + "ms";
+            s.style.animationDelay = (i * 18) + "ms";
+            s.setAttribute("aria-hidden", "true");
+            el.appendChild(s);
+          });
+        });
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("letters-in");
+                obs.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.3 },
+        );
+        document.querySelectorAll("[data-reveal-letters]").forEach((el) => io.observe(el));
+      })();
+    </script>
+
+    <!-- Konami code: ↑↑↓↓←→←→BA → chaos mode -->
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const seq = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+        let i = 0;
+        document.addEventListener("keydown", (e) => {
+          const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+          if (k === seq[i]) {
+            i++;
+            if (i >= seq.length) {
+              i = 0;
+              document.body.classList.add("konami-chaos");
+              // chaos lasts ~6 seconds
+              setTimeout(() => document.body.classList.remove("konami-chaos"), 6000);
+            }
+          } else {
+            i = k === seq[0] ? 1 : 0;
+          }
+        });
+      })();
+    </script>
+
+    <!-- X-ray mode: hold Shift for 600ms to reveal the comic-book construction lines -->
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        let timer = 0;
+        document.addEventListener("keydown", (e) => {
+          // ignore shift while in a form field
+          const t = e.target;
+          if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+          if (e.key === "Shift" && !timer) {
+            timer = setTimeout(() => {
+              document.body.classList.add("xray");
+            }, 500);
+          }
+        });
+        document.addEventListener("keyup", (e) => {
+          if (e.key === "Shift") {
+            clearTimeout(timer);
+            timer = 0;
+            document.body.classList.remove("xray");
+          }
+        });
+      })();
+    </script>
+
+    <!-- Magnetic CTAs: buttons subtly lean toward the cursor when nearby -->
+    <script is:inline>
+      (function () {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+        if (reduce.matches) return;
+        const STRENGTH = 0.18;     // how strongly the button tracks the cursor
+        const ACTIVATION = 70;     // px radius outside the button where pull starts
+
+        document.querySelectorAll("a.sticker, button.sticker").forEach((el) => {
+          if (el.classList.contains("work-card")) return; // work cards have their own animation
+          let raf = 0;
+          const reset = () => {
+            el.style.setProperty("--mag-x", "0px");
+            el.style.setProperty("--mag-y", "0px");
+          };
+          el.addEventListener("mousemove", (e) => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+              const r = el.getBoundingClientRect();
+              const cx = r.left + r.width / 2;
+              const cy = r.top + r.height / 2;
+              const dx = e.clientX - cx;
+              const dy = e.clientY - cy;
+              el.style.setProperty("--mag-x", (dx * STRENGTH).toFixed(1) + "px");
+              el.style.setProperty("--mag-y", (dy * STRENGTH).toFixed(1) + "px");
+            });
+          });
+          el.addEventListener("mouseleave", reset);
+          el.addEventListener("blur", reset);
+        });
+      })();
+    </script>
+
+    <!-- Triple-click the logo for a mascot celebration -->
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const logo = document.querySelector('header a[href="/#top"], header a[href="#top"]');
+        if (!logo) return;
+        let count = 0;
+        let timer = 0;
+        logo.addEventListener("click", (e) => {
+          count++;
+          clearTimeout(timer);
+          timer = setTimeout(() => { count = 0; }, 500);
+          if (count >= 3) {
+            e.preventDefault();
+            count = 0;
+            logo.classList.add("logo-celebrate");
+            setTimeout(() => logo.classList.remove("logo-celebrate"), 1800);
+          }
+        });
+      })();
+    </script>
+
+    <!-- Form submit celebration: dust bursts + button morphs before redirect -->
+    <script is:inline>
+      (function () {
+        const form = document.querySelector('form[name="quote"]');
+        if (!form) return;
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        form.addEventListener("submit", (e) => {
+          if (form.dataset.celebrating) return;
+          // honor native validation first
+          if (!form.checkValidity()) return;
+          if (reduce) return; // let the form submit normally without animation
+          e.preventDefault();
+          form.dataset.celebrating = "1";
+          const btn = form.querySelector('button[type="submit"]');
+          if (btn) {
+            btn.classList.add("is-celebrating");
+            btn.disabled = true;
+          }
+          // wait for animation, then submit
+          setTimeout(() => form.submit(), 850);
+        });
+      })();
+    </script>
+
+    <!-- Typewriter effect for any element with data-typewriter -->
+    <script is:inline>
+      (function () {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        document.querySelectorAll("[data-typewriter]").forEach((el) => {
+          const text = el.dataset.typewriter;
+          if (reduce) {
+            el.classList.add("is-done");
+            return;
+          }
+          el.textContent = "";
+          el.classList.add("is-active");
+          let i = 0;
+          function tick() {
+            if (i >= text.length) {
+              el.classList.remove("is-active");
+              el.classList.add("is-done");
+              return;
+            }
+            const ch = text[i++];
+            el.textContent += ch;
+            // pauses on punctuation, otherwise quick keystrokes
+            const delay = /[.?!]/.test(ch) ? 240 : /[,]/.test(ch) ? 170 : 55;
+            setTimeout(tick, delay);
+          }
+          // small lead-in so the page is settled
+          setTimeout(tick, 250);
+        });
+      })();
+    </script>
+
+    <!-- Dust-bunny burst on CTA hover: inject tiny SVG bunnies into every a.sticker/button.sticker -->
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        // Tiny dust-bunny silhouette — 10-point spiky fuzz blob, dust color with ink stroke.
+        const BUNNY_SVG =
+          '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+          '<path d="M12 2 L14 6 L18 4 L17 9 L22 10 L18 13 L21 17 L16 17 L17 22 L12 19 L7 22 L8 17 L3 17 L6 13 L2 10 L7 9 L6 4 L10 6 Z" ' +
+          'fill="#c9b79c" stroke="#1a1714" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+
+        const BURSTS = [
+          { dx: "-30px", dy: "-22px", rot: "-35deg", delay: "0s",    size: "16px" },
+          { dx: "30px",  dy: "-24px", rot: "40deg",  delay: "0.05s", size: "18px" },
+          { dx: "-6px",  dy: "-34px", rot: "-12deg", delay: "0.10s", size: "14px" },
+          { dx: "22px",  dy: "22px",  rot: "60deg",  delay: "0.15s", size: "15px" },
+          { dx: "-26px", dy: "20px",  rot: "-55deg", delay: "0.20s", size: "14px" },
+        ];
+
+        document.querySelectorAll("a.sticker, button.sticker").forEach((el) => {
+          // skip the work cards — they have their own flip animation
+          if (el.classList.contains("work-card")) return;
+          // make sure burst pieces position relative to the CTA
+          if (getComputedStyle(el).position === "static") {
+            el.style.position = "relative";
+          }
+          BURSTS.forEach((b) => {
+            const piece = document.createElement("span");
+            piece.className = "dust-burst-piece";
+            piece.setAttribute("aria-hidden", "true");
+            piece.style.cssText =
+              "--dx:" + b.dx + ";--dy:" + b.dy + ";--rot:" + b.rot +
+              ";--delay:" + b.delay + ";--size:" + b.size;
+            piece.innerHTML = BUNNY_SVG;
+            el.appendChild(piece);
+          });
+        });
+      })();
+    </script>
+
+    <!-- A) Staggered entrance animations: observe [data-stagger] grids -->
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (!("IntersectionObserver" in window)) return;
+        var grids = document.querySelectorAll("[data-stagger]");
+        if (!grids.length) return;
+        var io = new IntersectionObserver(
+          function (entries, obs) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                e.target.classList.add("stagger-in");
+                obs.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.1 },
+        );
+        grids.forEach(function (g) { io.observe(g); });
+      })();
+    </script>
+
+    <!-- B) Parallax depth on hero: mascot/speech shift on mouse move -->
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if ("ontouchstart" in window) return; // skip on touch devices
+        var hero = document.querySelector(".hero-parallax");
+        if (!hero) return;
+        var raf = 0;
+        hero.addEventListener("mousemove", function (e) {
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(function () {
+            var r = hero.getBoundingClientRect();
+            var px = ((e.clientX - r.left) / r.width - 0.5) * 2;  // -1 to 1
+            var py = ((e.clientY - r.top) / r.height - 0.5) * 2;
+            hero.style.setProperty("--px", px.toFixed(3));
+            hero.style.setProperty("--py", py.toFixed(3));
+          });
+        });
+        hero.addEventListener("mouseleave", function () {
+          cancelAnimationFrame(raf);
+          hero.style.setProperty("--px", "0");
+          hero.style.setProperty("--py", "0");
+        });
+      })();
+    </script>
+
+    <!-- D) Scroll progress indicator -->
+    <script is:inline>
+      (function () {
+        var bar = document.getElementById("scroll-progress");
+        if (!bar) return;
+        var ticking = false;
+        function update() {
+          ticking = false;
+          var doc = document.documentElement;
+          var scrollable = doc.scrollHeight - window.innerHeight;
+          if (scrollable <= 0) { bar.style.width = "0%"; return; }
+          var pct = Math.min(window.scrollY / scrollable * 100, 100);
+          bar.style.width = pct.toFixed(1) + "%";
+        }
+        window.addEventListener("scroll", function () {
+          if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        }, { passive: true });
+        update();
+      })();
+    </script>
+
+    <!-- E) Loading screen: branded splash on first visit, then sweeps away -->
+    <script is:inline>
+      (function () {
+        var screen = document.getElementById("loading-screen");
+        var barEl = document.getElementById("loading-bar");
+        if (!screen || !barEl) return;
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        // Only show on first visit this session
+        try {
+          if (sessionStorage.getItem("db-loaded") === "1" || reduce) {
+            screen.classList.add("is-loaded");
+            screen.style.display = "none";
+            return;
+          }
+        } catch (_) {}
+        // Animate the loading bar
+        var progress = 0;
+        var interval = setInterval(function () {
+          progress += Math.random() * 25 + 10;
+          if (progress > 95) progress = 95;
+          barEl.style.width = progress + "%";
+        }, 150);
+        // Once page is fully loaded, complete and dismiss
+        function dismiss() {
+          clearInterval(interval);
+          barEl.style.width = "100%";
+          setTimeout(function () {
+            screen.classList.add("is-loaded");
+            try { sessionStorage.setItem("db-loaded", "1"); } catch (_) {}
+            // Remove from DOM after fade
+            setTimeout(function () { screen.style.display = "none"; }, 600);
+          }, 300);
+        }
+        if (document.readyState === "complete") {
+          dismiss();
+        } else {
+          window.addEventListener("load", dismiss);
+          // Safety fallback — never block for more than 3 seconds
+          setTimeout(dismiss, 3000);
+        }
+      })();
+    </script>
+
+    <!-- Smooth scroll handled by CSS: html { scroll-behavior: smooth } -->
+  </body>
+</html>
