@@ -291,19 +291,38 @@ const jsonLd = {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         if (!("IntersectionObserver" in window)) return;
         document.querySelectorAll("[data-reveal-letters]").forEach((el) => {
-          const text = el.textContent || "";
-          el.textContent = "";
-          el.setAttribute("aria-label", text);
-          // wrap each character in a span for staggered animation
-          [...text].forEach((ch, i) => {
-            const s = document.createElement("span");
-            s.textContent = ch === " " ? " " : ch;
-            s.className = "letter";
-            s.style.transitionDelay = (i * 18) + "ms";
-            s.style.animationDelay = (i * 18) + "ms";
-            s.setAttribute("aria-hidden", "true");
-            el.appendChild(s);
-          });
+          el.setAttribute("aria-label", (el.textContent || "").replace(/\s+/g, " ").trim());
+          let i = 0;
+          const processNode = (node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+              const frag = document.createDocumentFragment();
+              (node.textContent || "").split(/(\s+)/).forEach((part) => {
+                if (!part) return;
+                if (/^\s+$/.test(part)) {
+                  frag.appendChild(document.createTextNode(" "));
+                  return;
+                }
+                const word = document.createElement("span");
+                word.style.display = "inline-block";
+                word.style.whiteSpace = "nowrap";
+                word.setAttribute("aria-hidden", "true");
+                [...part].forEach((ch) => {
+                  const s = document.createElement("span");
+                  s.textContent = ch;
+                  s.className = "letter";
+                  s.style.transitionDelay = (i * 18) + "ms";
+                  s.style.animationDelay = (i * 18) + "ms";
+                  i++;
+                  word.appendChild(s);
+                });
+                frag.appendChild(word);
+              });
+              node.parentNode.replaceChild(frag, node);
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+              [...node.childNodes].forEach(processNode);
+            }
+          };
+          [...el.childNodes].forEach(processNode);
         });
         const io = new IntersectionObserver(
           (entries, obs) => {
