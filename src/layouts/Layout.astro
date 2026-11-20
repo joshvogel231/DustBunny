@@ -5,11 +5,13 @@ import Mascot from "../components/Mascot.astro";
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = "The Dust Bunny — Don't Get Left in the Dust",
   description = "The Dust Bunny builds websites for small businesses with no site — or a site they hate. SEO + AI SEO baked in to grow your digital footprint and drive real traffic. Don't get left in the digital dust.",
+  noindex = false,
 } = Astro.props;
 
 const SITE_URL = "https://the-dustbunny.com";
@@ -47,6 +49,7 @@ const jsonLd = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 

@@ -21,7 +21,7 @@ const services = [
     tag: "03",
     title: "AI SEO",
     fill: "halftone-mustard",
-    text: "When people ask ChatGPT, Gemini, or Google's AI for a recommendation — we make sure your business is the answer.",
+    text: "When people ask ChatGPT, Gemini, or Google's AI for a recommendation, we optimize your site so you're more likely to be the answer they cite.",
   },
   {
     tag: "04",
@@ -215,6 +215,7 @@ const stats = [
             cat: "Energy & Construction",
             blurb: "350-person pipeline contractor working 28 states. A corporate rebuild that finally looks like the operator they are.",
             url: "https://frolicking-sundae-3dbbf1.netlify.app/",
+            label: "Concept / Refresh",
             fill: "halftone-ink",
             textColor: "text-cream",
             shot: "/work/pcm.jpg",
@@ -256,8 +257,15 @@ const stats = [
             </div>
             <div class="p-5">
               <h3 class="font-impact text-xl uppercase leading-tight">{w.name}</h3>
+              {w.label && (
+                <div class="ink-2 mt-2 inline-block -rotate-1 bg-mustard px-2 py-0.5 font-body text-xs font-800 uppercase tracking-wide shadow-comic-sm">
+                  {w.label}
+                </div>
+              )}
               <p class="mt-2 font-body text-sm text-ink/80">{w.blurb}</p>
-              <span class="mt-3 inline-block font-body text-xs font-700 uppercase tracking-wide text-comic-red">Visit site →</span>
+              <span class="mt-3 inline-block font-body text-xs font-700 uppercase tracking-wide text-comic-red">
+                {w.label ? "View concept →" : "Visit site →"}
+              </span>
             </div>
           </a>
         ))}
@@ -360,6 +368,12 @@ const stats = [
       ))}
     </div>
 
+    <p class="mt-10 text-center">
+      <span class="ink-2 inline-block -rotate-1 bg-mustard px-3 py-1 font-body text-sm font-800 uppercase tracking-wide shadow-comic-sm">
+        Custom builds from $1,000–$2,200
+      </span>
+    </p>
+
     <!-- expandable detailed breakdown -->
     <details class="process-details ink mx-auto mt-10 max-w-3xl bg-cream shadow-comic">
       <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-4 font-display text-base uppercase">
@@ -434,9 +448,12 @@ const stats = [
           </div>
 
           <p class="mt-5 font-body text-base leading-relaxed text-ink/85">
-            After earning his master's in AI design at Yale and three years at a
-            top Bay Area design studio, Josh moved back south to bring big-tech-quality
-            web work to the small businesses that need it most.
+            Tampa-born, Army veteran, and self-taught builder. Josh used the GI Bill
+            for an entrepreneurship degree and a master's in leadership and workforce
+            development — Geaux Tigers — and he's knocking out an MBA on top of that.
+            By day he's a Key Account Manager at a mid-size oil &amp; gas company. By
+            night he runs The Dust Bunny, building custom sites for the small
+            businesses that usually get left behind.
           </p>
 
           <a
@@ -471,6 +488,7 @@ const stats = [
         name="quote"
         method="POST"
         data-netlify="true"
+        netlify-honeypot="bot-field"
         data-netlify-honeypot="bot-field"
         action="/thanks"
         class="mt-8 grid gap-5"
