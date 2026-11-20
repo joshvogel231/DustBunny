@@ -4,6 +4,8 @@
  * One object per build. Nothing here labels a card as a client or a concept —
  * the section title carries that. Far From Home Bud's public name is new;
  * change `name` and `description` on that single entry when the wording shifts.
+ * Set `hidden: true` to keep a build in this list (and its screenshot) without
+ * showing the card. Flip it to false to bring the card back.
  */
 const sites = [
   {
@@ -74,6 +76,7 @@ const sites = [
   },
   {
     id: "push-the-process",
+    hidden: true,
     name: "Push the Process",
     description:
       "Competition prep and lifestyle coaching from Chris Massaro, with training and nutrition built around your goals.",
@@ -100,6 +103,7 @@ const sites = [
   },
   {
     id: "vertex",
+    hidden: true,
     name: "Vertex Contractors",
     description:
       "Site construction, land clearing, and demolition across Acadiana, based in Lafayette.",
@@ -112,6 +116,8 @@ const sites = [
     alt: "Vertex Contractors website for Acadiana site work, land clearing, and demolition.",
   },
 ];
+
+const visibleSites = sites.filter((site) => !site.hidden);
 ---
 
 <section id="work" class="border-y-4 border-ink halftone-mustard" aria-labelledby="sites-heading">
@@ -127,7 +133,7 @@ const sites = [
     </div>
 
     <div class="grid gap-8 sm:grid-cols-2 xl:grid-cols-3" data-stagger>
-      {sites.map((site) => (
+      {visibleSites.map((site) => (
         <a
           class="showcase-card"
           href={site.href}
