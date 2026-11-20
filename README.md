@@ -48,7 +48,7 @@ Drop it on any static host (Netlify, Vercel, S3, etc.).
 ```
 dust-bunny/
 ├── public/
-│   ├── work/             # 4 client site screenshots (JPG, baked into build)
+│   ├── work/             # full-page screenshots for the homepage showcase (WebP)
 │   ├── josh/             # 4 founder photos (Tampa → Army → today)
 │   └── favicon.svg
 ├── src/
@@ -71,7 +71,7 @@ dust-bunny/
 
 | Path | What's there |
 |---|---|
-| `/` | Hero, stats, services, recent work (4 cards), process, "Meet our Head Dust Bunny" teaser, contact form |
+| `/` | Hero, stats, services, Sites and Concepts showcase, process, "Meet our Head Dust Bunny" teaser, contact form |
 | `/about` | The "Yeah… none of that was true." punchline + 4-phase polaroid timeline + real bio |
 | `/faq` | 17 questions on fit, pricing, timeline, scope, ownership, maintenance |
 
@@ -122,18 +122,9 @@ After the first push, every commit to `main` triggers an auto-deploy.
 
 ## Screenshots
 
-Client portfolio screenshots in `public/work/` were captured via local headless
-Chrome at 1280×2400, then resized + JPEG-compressed via `sips`. To refresh:
-
-```bash
-# Example — replace URL/filename
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
-  --headless=new --disable-gpu --hide-scrollbars --window-size=1280,2400 \
-  --screenshot=raw.png "https://example.com"
-sips -s format jpeg -s formatOptions 80 --resampleWidth 800 \
-  raw.png --out public/work/example.jpg
-rm raw.png
-```
+Homepage showcase screenshots in `public/work/` are full-page captures,
+resized to 840px wide and saved as WebP. Card copy for each build, including
+Far From Home Bud's name and description, lives in `src/components/Showcase.astro`.
 
 ---
 
