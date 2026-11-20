@@ -74,6 +74,12 @@ html {
     background-image: radial-gradient(var(--color-paper-shadow) 1px, transparent 1px);
     background-size: 7px 7px;
   }
+  /* The "Free Sweep!" starburst is rotated and hangs off the contact panel.
+     At 390px that rotation sticks a few pixels past the viewport and the page
+     scrolls sideways. Clip the section so the star still overlaps the corner. */
+  #contact {
+    overflow-x: clip;
+  }
   h1, h2, h3 {
     font-family: var(--font-impact);
     letter-spacing: 0.01em;
