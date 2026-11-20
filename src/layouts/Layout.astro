@@ -6,12 +6,15 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** Set false on the 404 page so it does not advertise /404/ as a canonical URL. */
+  canonical?: boolean;
 }
 
 const {
   title = "The Dust Bunny — Don't Get Left in the Dust",
   description = "The Dust Bunny builds websites for small businesses with no site — or a site they hate. SEO + AI SEO baked in to grow your digital footprint and drive real traffic. Don't get left in the digital dust.",
   noindex = false,
+  canonical: includeCanonical = true,
 } = Astro.props;
 
 const SITE_URL = "https://the-dustbunny.com";
@@ -61,7 +64,7 @@ const jsonLd = {
     />
 
     <title>{title}</title>
-    <link rel="canonical" href={canonical} />
+    {includeCanonical && <link rel="canonical" href={canonical} />}
 
     <!-- Open Graph (Facebook, LinkedIn, Slack, iMessage, etc.) -->
     <meta property="og:title" content={title} />
