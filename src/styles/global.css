@@ -376,41 +376,6 @@ html {
     outline-offset: 2px;
   }
 
-  /* ===== "Currently building" status widget ===== */
-  .status-widget {
-    position: fixed;
-    bottom: 16px;
-    left: 16px;
-    z-index: 45;
-    display: flex; align-items: center; gap: 10px;
-    background: var(--color-cream);
-    border: 3px solid var(--color-ink);
-    box-shadow: var(--shadow-comic-sm);
-    padding: 8px 14px;
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-ink);
-    pointer-events: none;
-  }
-  .status-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: #1ec774;
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
-    animation: status-pulse 2.4s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-  @keyframes status-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.55; transform: scale(0.85); }
-  }
-  @media (max-width: 640px) {
-    .status-widget { display: none; }
-  }
-
   /* ===== Back-to-top button ===== */
   .btt {
     position: fixed;
@@ -517,7 +482,7 @@ html {
   /* ===== Print stylesheet ===== */
   @media print {
     /* hide chrome and animation-heavy decoration */
-    header, footer, .skip-link, .status-widget, .btt,
+    header, footer, .skip-link, .btt,
     #dust-corner, .speech, .action-lines,
     .work-trigger, .testimonial-arrow, .testimonial-dot {
       display: none !important;
