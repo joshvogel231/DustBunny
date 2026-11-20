@@ -78,6 +78,7 @@ const clients = [
     name: "Pipeline Construction & Maintenance",
     cat: "Energy & Construction",
     result: "Complete corporate rebuild for a 350-person operation across 28 states. A site that finally looks like the company they actually are.",
+    label: "Concept / Refresh",
     fill: "halftone-ink",
     textColor: "text-cream",
   },
@@ -123,7 +124,7 @@ const objections = [
 const deliverables = [
   ["Custom Design, No Templates", "Your business, your brand. Nobody else's layout. Nobody else's anything."],
   ["SEO Built In From Day One", "Not added after. Not optional. Baked into the structure, the copy, and the code so you actually show up."],
-  ["AI SEO", "When someone asks ChatGPT or Google's AI for a recommendation, we make sure your business is the answer."],
+  ["AI SEO", "When someone asks ChatGPT or Google's AI for a recommendation, we optimize your site so you're more likely to be the answer they cite."],
   ["Mobile-First Build", "Over half your visitors are on their phone. Fast, sharp, and converting on mobile before everything else."],
   ["3 to 5 Business Day Turnaround", "Not weeks. Not a 6-week discovery phase. Fast, without cutting corners."],
   ["One Free Revision Round", "After delivery you get one full round of revisions. If it is not right, we fix it."],
@@ -382,6 +383,11 @@ const deliverables = [
             </div>
             <div class="p-6">
               <h3 class="font-impact text-2xl uppercase leading-tight">{c.name}</h3>
+              {c.label && (
+                <div class="ink-2 mt-2 inline-block -rotate-1 bg-mustard px-2 py-0.5 font-body text-xs font-800 uppercase tracking-wide shadow-comic-sm">
+                  {c.label}
+                </div>
+              )}
               <p class="mt-2 font-body text-sm leading-relaxed text-ink/80">{c.result}</p>
             </div>
           </div>
@@ -560,6 +566,7 @@ const deliverables = [
           name="why-hire-me-quote"
           method="POST"
           data-netlify="true"
+          netlify-honeypot="bot-field"
           data-netlify-honeypot="bot-field"
           action="/thanks"
           class="mt-8 grid gap-5"
